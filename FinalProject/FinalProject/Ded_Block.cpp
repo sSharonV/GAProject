@@ -4,7 +4,7 @@
 Ded_Block::Ded_Block(unsigned int sn, string id, int n_s_f, int s)
 	: b_sn(sn), b_id(id), num_shared_files(n_s_f), size(s)
 {
-	b_files.reserve(num_shared_files);
+
 }
 
 void Ded_Block::setBlockSize(unsigned int s)
