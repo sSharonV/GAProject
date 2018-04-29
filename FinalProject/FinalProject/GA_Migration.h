@@ -1,5 +1,6 @@
 #pragma once
 #include "Ded_File.h"
+#include "ga\ga.h"
 #include <fstream>
 #include <iostream>
 #include <map>
