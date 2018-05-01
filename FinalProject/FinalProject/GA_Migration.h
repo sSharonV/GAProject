@@ -1,6 +1,5 @@
 #pragma once
 #include "Ded_File.h"
-#include "ga\ga.h"
 #include <fstream>
 #include <iostream>
 #include <map>
@@ -11,6 +10,7 @@ using namespace std;
 class GA_Migration {
 	map<string, Ded_Block> m_blocks;
 	map<string, Ded_File> m_files;
+	unsigned long m_sizeLimit;
 public:
 	GA_Migration(ifstream &input);
 private:
