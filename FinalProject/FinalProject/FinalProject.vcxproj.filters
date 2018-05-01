@@ -39,6 +39,12 @@
     <ClInclude Include="GA_Migration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GA_Population.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Chromosome.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FinalProject.cpp">
@@ -57,6 +63,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GA_Migration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_Chromosome.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_Population.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
