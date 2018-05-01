@@ -13,9 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ga">
-      <UniqueIdentifier>{f103507e-54e0-4e32-b815-a884a892ec3c}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FinalProject.h">
@@ -42,131 +39,11 @@
     <ClInclude Include="GA_Migration.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ga\ga.h">
-      <Filter>ga</Filter>
+    <ClInclude Include="GA_Population.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ga\GA1DArrayGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GA1DBinStrGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GA2DArrayGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GA2DBinStrGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GA3DArrayGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GA3DBinStrGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAAllele.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAArray.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GABaseGA.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GABin2DecGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\gabincvt.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GABinStr.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\gaconfig.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GADCrowdingGA.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GADemeGA.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\gaerror.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAEvalData.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\gaid.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAIncGA.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAList.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAListBASE.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAListGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAMask.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GANode.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAParameter.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAPopulation.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\garandom.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GARealGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAScaling.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GASelector.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GASimpleGA.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GASStateGA.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAStatistics.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GAStringGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GATree.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GATreeBASE.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\GATreeGenome.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\gatypes.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\gaversion.h">
-      <Filter>ga</Filter>
-    </ClInclude>
-    <ClInclude Include="ga\std_stream.h">
-      <Filter>ga</Filter>
+    <ClInclude Include="GA_Chromosome.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -188,101 +65,11 @@
     <ClCompile Include="GA_Migration.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ga\GA1DArrayGenome.Cpp">
-      <Filter>ga</Filter>
+    <ClCompile Include="GA_Chromosome.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ga\GA1DBinStrGenome.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GA2DArrayGenome.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GA2DBinStrGenome.cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GA3DArrayGenome.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GA3DBinStrGenome.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAAllele.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GABaseGA.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GABin2DecGenome.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\gabincvt.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GABinStr.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GADCrowdingGA.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GADemeGA.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\gaerror.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAGenome.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAIncGA.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAList.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAListBASE.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAListGenome.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAParameter.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAPopulation.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\garandom.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GARealGenome.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAScaling.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GASelector.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GASimpleGA.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GASStateGA.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAStatistics.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GAStringGenome.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GATree.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GATreeBASE.Cpp">
-      <Filter>ga</Filter>
-    </ClCompile>
-    <ClCompile Include="ga\GATreeGenome.Cpp">
-      <Filter>ga</Filter>
+    <ClCompile Include="GA_Population.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -293,21 +80,6 @@
   <ItemGroup>
     <None Include="res\FinalProject.rc2">
       <Filter>Resource Files</Filter>
-    </None>
-    <None Include="ga\ChangeLog">
-      <Filter>ga</Filter>
-    </None>
-    <None Include="ga\makefile">
-      <Filter>ga</Filter>
-    </None>
-    <None Include="ga\makefile.bcc">
-      <Filter>ga</Filter>
-    </None>
-    <None Include="ga\makefile.sources">
-      <Filter>ga</Filter>
-    </None>
-    <None Include="ga\makefile.vcpp">
-      <Filter>ga</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

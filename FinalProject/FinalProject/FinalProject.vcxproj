@@ -88,7 +88,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
@@ -188,49 +188,9 @@
     <ClInclude Include="Ded_File.h" />
     <ClInclude Include="FinalProject.h" />
     <ClInclude Include="FinalProjectDlg.h" />
-    <ClInclude Include="ga\ga.h" />
-    <ClInclude Include="ga\GA1DArrayGenome.h" />
-    <ClInclude Include="ga\GA1DBinStrGenome.h" />
-    <ClInclude Include="ga\GA2DArrayGenome.h" />
-    <ClInclude Include="ga\GA2DBinStrGenome.h" />
-    <ClInclude Include="ga\GA3DArrayGenome.h" />
-    <ClInclude Include="ga\GA3DBinStrGenome.h" />
-    <ClInclude Include="ga\GAAllele.h" />
-    <ClInclude Include="ga\GAArray.h" />
-    <ClInclude Include="ga\GABaseGA.h" />
-    <ClInclude Include="ga\GABin2DecGenome.h" />
-    <ClInclude Include="ga\gabincvt.h" />
-    <ClInclude Include="ga\GABinStr.h" />
-    <ClInclude Include="ga\gaconfig.h" />
-    <ClInclude Include="ga\GADCrowdingGA.h" />
-    <ClInclude Include="ga\GADemeGA.h" />
-    <ClInclude Include="ga\gaerror.h" />
-    <ClInclude Include="ga\GAEvalData.h" />
-    <ClInclude Include="ga\GAGenome.h" />
-    <ClInclude Include="ga\gaid.h" />
-    <ClInclude Include="ga\GAIncGA.h" />
-    <ClInclude Include="ga\GAList.h" />
-    <ClInclude Include="ga\GAListBASE.h" />
-    <ClInclude Include="ga\GAListGenome.h" />
-    <ClInclude Include="ga\GAMask.h" />
-    <ClInclude Include="ga\GANode.h" />
-    <ClInclude Include="ga\GAParameter.h" />
-    <ClInclude Include="ga\GAPopulation.h" />
-    <ClInclude Include="ga\garandom.h" />
-    <ClInclude Include="ga\GARealGenome.h" />
-    <ClInclude Include="ga\GAScaling.h" />
-    <ClInclude Include="ga\GASelector.h" />
-    <ClInclude Include="ga\GASimpleGA.h" />
-    <ClInclude Include="ga\GASStateGA.h" />
-    <ClInclude Include="ga\GAStatistics.h" />
-    <ClInclude Include="ga\GAStringGenome.h" />
-    <ClInclude Include="ga\GATree.h" />
-    <ClInclude Include="ga\GATreeBASE.h" />
-    <ClInclude Include="ga\GATreeGenome.h" />
-    <ClInclude Include="ga\gatypes.h" />
-    <ClInclude Include="ga\gaversion.h" />
-    <ClInclude Include="ga\std_stream.h" />
     <ClInclude Include="GA_Migration.h" />
+    <ClInclude Include="GA_Chromosome.h" />
+    <ClInclude Include="GA_Population.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -240,39 +200,9 @@
     <ClCompile Include="Ded_File.cpp" />
     <ClCompile Include="FinalProject.cpp" />
     <ClCompile Include="FinalProjectDlg.cpp" />
-    <ClCompile Include="ga\GA1DArrayGenome.Cpp" />
-    <ClCompile Include="ga\GA1DBinStrGenome.Cpp" />
-    <ClCompile Include="ga\GA2DArrayGenome.Cpp" />
-    <ClCompile Include="ga\GA2DBinStrGenome.cpp" />
-    <ClCompile Include="ga\GA3DArrayGenome.Cpp" />
-    <ClCompile Include="ga\GA3DBinStrGenome.Cpp" />
-    <ClCompile Include="ga\GAAllele.Cpp" />
-    <ClCompile Include="ga\GABaseGA.Cpp" />
-    <ClCompile Include="ga\GABin2DecGenome.Cpp" />
-    <ClCompile Include="ga\gabincvt.Cpp" />
-    <ClCompile Include="ga\GABinStr.Cpp" />
-    <ClCompile Include="ga\GADCrowdingGA.Cpp" />
-    <ClCompile Include="ga\GADemeGA.Cpp" />
-    <ClCompile Include="ga\gaerror.Cpp" />
-    <ClCompile Include="ga\GAGenome.Cpp" />
-    <ClCompile Include="ga\GAIncGA.Cpp" />
-    <ClCompile Include="ga\GAList.Cpp" />
-    <ClCompile Include="ga\GAListBASE.Cpp" />
-    <ClCompile Include="ga\GAListGenome.Cpp" />
-    <ClCompile Include="ga\GAParameter.Cpp" />
-    <ClCompile Include="ga\GAPopulation.Cpp" />
-    <ClCompile Include="ga\garandom.Cpp" />
-    <ClCompile Include="ga\GARealGenome.Cpp" />
-    <ClCompile Include="ga\GAScaling.Cpp" />
-    <ClCompile Include="ga\GASelector.Cpp" />
-    <ClCompile Include="ga\GASimpleGA.Cpp" />
-    <ClCompile Include="ga\GASStateGA.Cpp" />
-    <ClCompile Include="ga\GAStatistics.Cpp" />
-    <ClCompile Include="ga\GAStringGenome.Cpp" />
-    <ClCompile Include="ga\GATree.Cpp" />
-    <ClCompile Include="ga\GATreeBASE.Cpp" />
-    <ClCompile Include="ga\GATreeGenome.Cpp" />
+    <ClCompile Include="GA_Chromosome.cpp" />
     <ClCompile Include="GA_Migration.cpp" />
+    <ClCompile Include="GA_Population.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -284,11 +214,6 @@
     <ResourceCompile Include="FinalProject.rc" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ga\ChangeLog" />
-    <None Include="ga\makefile" />
-    <None Include="ga\makefile.bcc" />
-    <None Include="ga\makefile.sources" />
-    <None Include="ga\makefile.vcpp" />
     <None Include="res\FinalProject.rc2" />
   </ItemGroup>
   <ItemGroup>
