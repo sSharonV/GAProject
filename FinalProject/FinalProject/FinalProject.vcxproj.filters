@@ -498,6 +498,7 @@
     <None Include="geneial\config.h.in">
       <Filter>geneial</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\FinalProject.ico">

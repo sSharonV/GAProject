@@ -2,6 +2,7 @@
 #include "GA_Migration.h"
 
 
+
 GA_Migration::GA_Migration(ifstream &input)
 {
 	map<string, string> blocks_size;

@@ -1,7 +1,7 @@
 #include <geneial/utility/Debug.h>
 
 
-/**
+/*
  *
  * @brief Print a demangled stack backtrace of the caller function to FILE* out.
  *
@@ -10,7 +10,7 @@
  * See https://panthema.net/2008/0901-stacktrace-demangled/
  * This function does not adhere global coding standards.
  *
- */
+ *
 void print_stacktrace(FILE *out)
 {
     fprintf(out, "stack trace:\n");
@@ -90,3 +90,4 @@ void print_stacktrace(FILE *out)
     free(funcname);
     free(symbollist);
 }
+*/
