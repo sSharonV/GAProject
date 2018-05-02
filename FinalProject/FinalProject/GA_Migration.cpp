@@ -2,6 +2,7 @@
 #include "GA_Migration.h"
 
 
+
 GA_Migration::GA_Migration(ifstream &input)
 {
 	map<string, string> blocks_size;
@@ -9,6 +10,7 @@ GA_Migration::GA_Migration(ifstream &input)
 	InitFileVector(input, blocks_size, files_blocks);
 	InitBlockVector(input);
 	ConnectBlockAndFiles(blocks_size, files_blocks);
+	
 }
 
 

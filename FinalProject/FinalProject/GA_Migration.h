@@ -4,13 +4,17 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <geneial\core\operations\crossover\BaseCrossoverOperation.h>
 
 using namespace std;
+using namespace boost;
 
 class GA_Migration {
 	map<string, Ded_Block> m_blocks;
 	map<string, Ded_File> m_files;
 	unsigned long m_sizeLimit;
+
+
 public:
 	GA_Migration(ifstream &input);
 private:
