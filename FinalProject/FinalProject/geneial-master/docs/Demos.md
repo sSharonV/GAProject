@@ -1,2 +1,0 @@
-libGENEIAL - Demos {#demos}
-==================
