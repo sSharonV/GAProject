@@ -9,6 +9,7 @@ GA_Migration::GA_Migration(ifstream &input)
 	InitFileVector(input, blocks_size, files_blocks);
 	InitBlockVector(input);
 	ConnectBlockAndFiles(blocks_size, files_blocks);
+	
 }
 
 

@@ -4,8 +4,10 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <boost\algorithm\cxx11\iota.hpp>
 
 using namespace std;
+using namespace boost;
 
 class GA_Migration {
 	map<string, Ded_Block> m_blocks;

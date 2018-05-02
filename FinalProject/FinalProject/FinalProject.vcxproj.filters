@@ -13,6 +13,69 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="geneial">
+      <UniqueIdentifier>{fe730f68-d783-49a3-b7eb-313eb102f067}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\algorithm">
+      <UniqueIdentifier>{c9d36435-6242-4683-b41f-5aa6b42dd3ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\algorithm\criteria">
+      <UniqueIdentifier>{0134fc7b-59db-4766-b172-6c2686b133ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\algorithm\diagnostics">
+      <UniqueIdentifier>{89f643a0-92f2-466e-b3aa-9076fe5af4c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\algorithm\observer">
+      <UniqueIdentifier>{ad40b498-3860-4347-b953-03271af0897f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core">
+      <UniqueIdentifier>{18fc8ef5-d67d-4c0c-88dc-9460c2235066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\fitness">
+      <UniqueIdentifier>{00f311d9-90b9-4672-aa39-01522e24193b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\operations">
+      <UniqueIdentifier>{8498f0b6-6aae-49c6-92a6-92ade8c52fc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\population">
+      <UniqueIdentifier>{3a657526-0e19-46fe-a234-c9765ea026d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\population\builder">
+      <UniqueIdentifier>{5ceb7b74-fe16-4de2-857f-bf473747fae6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\population\chromosome">
+      <UniqueIdentifier>{a95f917e-512c-4da1-95ae-69683f64bdc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\population\management">
+      <UniqueIdentifier>{6acbcb15-39a7-4b99-b353-086a4d2fafa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\operations\choosing">
+      <UniqueIdentifier>{8db1c30a-d5b5-4737-8192-b9ee375eda29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\operations\coupling">
+      <UniqueIdentifier>{bf7c45d7-43f8-4853-b9f9-5205ecb64d7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\operations\crossover">
+      <UniqueIdentifier>{9fc16fe4-3ab1-4e2e-bb6c-75184efe2bec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\operations\mutation">
+      <UniqueIdentifier>{b8dd4109-2fa2-4b63-b684-3b82e21843d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\operations\replacement">
+      <UniqueIdentifier>{43d066e2-3312-4f45-a573-4d00fc0f92f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\core\operations\selection">
+      <UniqueIdentifier>{e86ea8bc-1c3e-4be8-9b59-45ce49fbaab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\utility">
+      <UniqueIdentifier>{9cb12fe8-e48f-420b-ad96-5a6f61330a51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\utility\mixins">
+      <UniqueIdentifier>{e25d6606-c21a-4f15-a98f-3266d201faed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geneial\utility\patterns">
+      <UniqueIdentifier>{3e36e57d-88b3-4a31-b9f4-71f3fdeed5c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FinalProject.h">
@@ -45,6 +108,342 @@
     <ClInclude Include="GA_Chromosome.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="geneial\namespaces.h">
+      <Filter>geneial</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\BaseGeneticAlgorithm.h">
+      <Filter>geneial\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\BaseGeneticAlgorithm.hpp">
+      <Filter>geneial\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\SteadyStateAlgorithm.h">
+      <Filter>geneial\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\SteadyStateAlgorithm.hpp">
+      <Filter>geneial\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\SteadyStateAlgorithmBuilder.hpp">
+      <Filter>geneial\algorithm</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\BaseStoppingCriterion.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\CombinedCriterion.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\ConsecutiveDecorator.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\FitnessValueDeltaCriterion.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\FitnessValueReachedCriterion.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\FixPointCriterion.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\MaxGenerationCriterion.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\NegationDecorator.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\PopulationUnchangedCriterion.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\StatefulStoppingCriterion.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\criteria\TrailingStopCriterion.h">
+      <Filter>geneial\algorithm\criteria</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\diagnostics\Diagnostics.h">
+      <Filter>geneial\algorithm\diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\diagnostics\Diagnostics.hpp">
+      <Filter>geneial\algorithm\diagnostics</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\observer\AlgorithmObserver.h">
+      <Filter>geneial\algorithm\observer</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\algorithm\observer\BestChromosomeObserver.h">
+      <Filter>geneial\algorithm\observer</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\fitness\Fitness.h">
+      <Filter>geneial\core\fitness</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\fitness\Fitness.hpp">
+      <Filter>geneial\core\fitness</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\fitness\FitnessEvaluator.h">
+      <Filter>geneial\core\fitness</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\ContainerTypes.h">
+      <Filter>geneial\core\population</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\Population.h">
+      <Filter>geneial\core\population</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\Population.hpp">
+      <Filter>geneial\core\population</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\PopulationSettings.h">
+      <Filter>geneial\core\population</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\BaseChromosomeFactory.h">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\BuilderSettings.h">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\ContinousMultiValueBuilderSettings.h">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\ContinousMultiValueChromosomeFactory.h">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\ContinousMultiValueChromosomeFactory.hpp">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\MultiValueBuilderSettings.h">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\MultiValueChromosomeFactory.h">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\MultiValueChromosomeFactory.hpp">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\PermutationBuilderSettings.h">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\PermutationChromosomeFactory.h">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\builder\PermutationChromosomeFactory.hpp">
+      <Filter>geneial\core\population\builder</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\chromosome\BaseChromosome.h">
+      <Filter>geneial\core\population\chromosome</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\chromosome\BaseChromosome.hpp">
+      <Filter>geneial\core\population\chromosome</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\chromosome\MultiValueChromosome.h">
+      <Filter>geneial\core\population\chromosome</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\chromosome\MultiValueChromosome.hpp">
+      <Filter>geneial\core\population\chromosome</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\management\BaseManager.h">
+      <Filter>geneial\core\population\management</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\management\BaseManager.hpp">
+      <Filter>geneial\core\population\management</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\management\Bookkeeper.h">
+      <Filter>geneial\core\population\management</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\population\management\ResourcePool.h">
+      <Filter>geneial\core\population\management</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\choosing\BaseChoosingOperation.h">
+      <Filter>geneial\core\operations\choosing</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\choosing\ChooseRandom.h">
+      <Filter>geneial\core\operations\choosing</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\choosing\ChooseRandom.hpp">
+      <Filter>geneial\core\operations\choosing</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\choosing\LambdaChoosingAdapter.h">
+      <Filter>geneial\core\operations\choosing</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\coupling\BaseCouplingOperation.h">
+      <Filter>geneial\core\operations\coupling</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\coupling\BaseCouplingOperation.hpp">
+      <Filter>geneial\core\operations\coupling</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\coupling\CouplingSettings.h">
+      <Filter>geneial\core\operations\coupling</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\coupling\LambdaCouplingAdapter.h">
+      <Filter>geneial\core\operations\coupling</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\coupling\RandomCouplingOperation.h">
+      <Filter>geneial\core\operations\coupling</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\coupling\RandomCouplingOperation.hpp">
+      <Filter>geneial\core\operations\coupling</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\coupling\SimpleCouplingOperation.h">
+      <Filter>geneial\core\operations\coupling</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\coupling\SimpleCouplingOperation.hpp">
+      <Filter>geneial\core\operations\coupling</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\BaseCrossoverOperation.h">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValueChromosomeAverageCrossover.h">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValueChromosomeAverageCrossover.hpp">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValueChromosomeBlendingCrossover.h">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValueChromosomeBlendingCrossover.hpp">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValueChromosomeCrossoverOperation.h">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValueChromosomeNPointCrossover.h">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValueChromosomeNPointCrossover.hpp">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValueChromosomeNPointCrossoverSettings.h">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValueCrossoverLambdaAdapter.h">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValuePermutationCrossover.h">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\MultiValuePermutationCrossover.hpp">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\SmoothedMultiValueChromosomeNPointCrossover.h">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\crossover\SmoothedMultiValueChromosomeNPointCrossover.hpp">
+      <Filter>geneial\core\operations\crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\mutation\BaseMutationOperation.h">
+      <Filter>geneial\core\operations\mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\mutation\MultiValueChromosomeMutationOperation.h">
+      <Filter>geneial\core\operations\mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\mutation\MultiValueMutationSettings.h">
+      <Filter>geneial\core\operations\mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\mutation\SmoothPeakMutationOperation.h">
+      <Filter>geneial\core\operations\mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\mutation\SmoothPeakMutationOperation.hpp">
+      <Filter>geneial\core\operations\mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\mutation\UniformMutationOperation.h">
+      <Filter>geneial\core\operations\mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\mutation\UniformMutationOperation.hpp">
+      <Filter>geneial\core\operations\mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\mutation\ValueSwapMutationOperation.h">
+      <Filter>geneial\core\operations\mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\mutation\ValueSwapMutationOperation.hpp">
+      <Filter>geneial\core\operations\mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\selection\BaseSelectionOperation.h">
+      <Filter>geneial\core\operations\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\selection\BaseSelectionSettings.h">
+      <Filter>geneial\core\operations\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\selection\FitnessProportionalSelection.h">
+      <Filter>geneial\core\operations\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\selection\FitnessProportionalSelection.hpp">
+      <Filter>geneial\core\operations\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\selection\FitnessProportionalSelectionSettings.h">
+      <Filter>geneial\core\operations\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\selection\RouletteWheelSelection.h">
+      <Filter>geneial\core\operations\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\selection\RouletteWheelSelection.hpp">
+      <Filter>geneial\core\operations\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\selection\UniformRandomSelection.h">
+      <Filter>geneial\core\operations\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\selection\UniformRandomSelection.hpp">
+      <Filter>geneial\core\operations\selection</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\replacement\BaseReplacementOperation.h">
+      <Filter>geneial\core\operations\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\replacement\BaseReplacementSettings.h">
+      <Filter>geneial\core\operations\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\replacement\ReplaceRandomOperation.h">
+      <Filter>geneial\core\operations\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\replacement\ReplaceRandomOperation.hpp">
+      <Filter>geneial\core\operations\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\replacement\ReplaceWorstOperation.h">
+      <Filter>geneial\core\operations\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\core\operations\replacement\ReplaceWorstOperation.hpp">
+      <Filter>geneial\core\operations\replacement</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\Debug.h">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\ExecutionManager.h">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\Interpolators.h">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\Interpolators.hpp">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\Random.h">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\Random.hpp">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\Smoothing.h">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\Smoothing.hpp">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\ThreadedExecutionManager.h">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\ThreadedExecutionManager.hpp">
+      <Filter>geneial\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\mixins\Buildable.h">
+      <Filter>geneial\utility\mixins</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\mixins\EnableMakeShared.h">
+      <Filter>geneial\utility\mixins</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\mixins\Hasher.h">
+      <Filter>geneial\utility\mixins</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\mixins\Printable.h">
+      <Filter>geneial\utility\mixins</Filter>
+    </ClInclude>
+    <ClInclude Include="geneial\utility\patterns\Singleton.h">
+      <Filter>geneial\utility\patterns</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FinalProject.cpp">
@@ -71,6 +470,21 @@
     <ClCompile Include="GA_Population.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="geneial\algorithm\diagnostics\Diagnostics.cpp">
+      <Filter>geneial\algorithm\diagnostics</Filter>
+    </ClCompile>
+    <ClCompile Include="geneial\core\population\management\Bookkeeper.cpp">
+      <Filter>geneial\core\population\management</Filter>
+    </ClCompile>
+    <ClCompile Include="geneial\utility\Debug.cpp">
+      <Filter>geneial\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="geneial\utility\Random.cpp">
+      <Filter>geneial\utility</Filter>
+    </ClCompile>
+    <ClCompile Include="geneial\utility\mixins\Printable.cpp">
+      <Filter>geneial\utility\mixins</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FinalProject.rc">
@@ -80,6 +494,9 @@
   <ItemGroup>
     <None Include="res\FinalProject.rc2">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="geneial\config.h.in">
+      <Filter>geneial</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
