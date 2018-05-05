@@ -13,6 +13,23 @@ GA_Migration::GA_Migration(ifstream &input)
 	
 }
 
+unsigned long GA_Migration::SolutionSize()
+{
+	return m_sizeLimit;
+}
+
+GA_Migration * GA_Migration::GetInstance(ifstream & input)
+{
+	return new GA_Migration(input);
+}
+
+GA_Migration * GA_Migration::GetInstance()
+{
+	if (!m_migInstance)
+		return NULL;
+	return m_migInstance;
+}
+
 
 void GA_Migration::InitBlockVector(ifstream& input)
 {
