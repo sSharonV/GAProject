@@ -1,4 +1,7 @@
 #pragma once
+#define _CRTDBG_MAP_ALLOC
+#include <cstdlib>
+#include <crtdbg.h>
 #include "Ded_File.h"
 #include "GA_Chromosome.h"
 #include "GA_Population.h"
@@ -9,6 +12,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <memory>
 
 using namespace std;
 
@@ -32,7 +36,6 @@ struct general_prop{
 };
 
 class GA_Migration {
-
 	map<string, Ded_Block> m_blocks;
 	map<string, Ded_File> m_files;
 	general_prop mig_props;
@@ -49,7 +52,7 @@ public:
 private:
 	void InitBlockVector(ifstream &input);
 	void InitFileVector(ifstream & input, map<string, string> &blocks, map<string, vector<string>> &f_b);
-	void ConnectBlockAndFiles(map<string, string> &block_sizes, map<string, vector<string>> &f_b);
+	void ConnectBlockAndFiles(map<string, string>& block_sizes, map<string, vector<string>>&f_b);
 	void RunGeneticAlgo();
 	string InputHelper(ifstream &in);
 	bool IsFirstChar(ifstream &in, char ch);

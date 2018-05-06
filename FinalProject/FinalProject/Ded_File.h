@@ -1,6 +1,6 @@
 #pragma once
 #include "Ded_Block.h"
-
+#include <memory>
 #include <vector>
 #include <map>
 #include "iostream"
@@ -14,9 +14,11 @@ class Ded_File {
 	string f_id;
 	unsigned int f_dir_sn;
 	int f_num_blocks;
-	map<string,Ded_Block*> f_blocks;
+	shared_ptr<map<string,Ded_Block*>> f_blocks;
 	
 public:
 	Ded_File(unsigned int sn = 0, string id = "", unsigned int dir_sn = 0, int num_blocks = 0);
+	~Ded_File();
+	string GetSN();
 	void UpdateBlockSN(Ded_Block &block);
 };

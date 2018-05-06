@@ -1,7 +1,17 @@
 #include "stdafx.h"
 #include "GA_Migration.h"
 
-GA_Migration::GA_Migration(){}
+GA_Migration::GA_Migration(){
+	//using t_blocks = map<string, Ded_Block>;
+	//using il_blocks = initializer_list<t_blocks::value_type>;
+	//using  t_files = map<string, Ded_File>;
+	//using il_files = initializer_list<t_files::value_type>;
+	//m_blocks =  make_shared<t_blocks>(
+	//	il_blocks{});
+	//m_files = make_shared<t_files>(
+	//	il_files{});
+	//mig_props = make_shared<general_prop>();
+}
 
 void GA_Migration::InitBipartiteGraph(ifstream &input)
 {
@@ -11,48 +21,51 @@ void GA_Migration::InitBipartiteGraph(ifstream &input)
 	InitBlockVector(input);
 	ConnectBlockAndFiles(blocks_size, files_blocks);
 	// free the hash-maps memmory - size = 0
-	blocks_size.clear();
-	files_blocks.clear();
+	//(*blocks_size).clear();
+	//(*files_blocks).clear();
 }
 
 void GA_Migration::SetGeneralProperties(general_prop &properties)
 {
-	mig_props.g_sel_mode = properties.g_sel_mode;
-	mig_props.g_cros_mode = properties.g_cros_mode;
-	mig_props.g_mut_mode = properties.g_mut_mode;
-	mig_props.g_over_percent = properties.g_over_percent;
-	mig_props.g_generations = properties.g_generations;
-	mig_props.g_elit_best = properties.g_elit_best;
-	mig_props.g_start_fix = properties.g_start_fix;
-	mig_props.g_epsilon = properties.g_epsilon;
-	mig_props.trueFor_KB = properties.trueFor_KB;
-	if (mig_props.trueFor_KB) mig_props.g_kb = properties.g_kb;
-	else mig_props.g_percent = properties.g_percent;
+	(mig_props).g_sel_mode = properties.g_sel_mode;
+	(mig_props).g_cros_mode = properties.g_cros_mode;
+	(mig_props).g_mut_mode = properties.g_mut_mode;
+	(mig_props).g_over_percent = properties.g_over_percent;
+	(mig_props).g_generations = properties.g_generations;
+	(mig_props).g_elit_best = properties.g_elit_best;
+	(mig_props).g_start_fix = properties.g_start_fix;
+	(mig_props).g_epsilon = properties.g_epsilon;
+	(mig_props).trueFor_KB = properties.trueFor_KB;
+	if ((mig_props).trueFor_KB) (mig_props).g_kb = properties.g_kb;
+	else (mig_props).g_percent = properties.g_percent;
 }
 
 unsigned long GA_Migration::GetSolutionLimitSize()
 {
-	if (mig_props.trueFor_KB) {	// return the number of KB (10^3B)
-		return mig_props.g_kb;
+	if ((mig_props).trueFor_KB) {	// return the number of KB (10^3B)
+		return (mig_props).g_kb;
 	}
 	else {
 		long double size;
-		size = (mig_props.g_totalKB) * (mig_props.g_percent);
+		size = ((mig_props).g_totalKB) * ((mig_props).g_percent);
 		return size;
 	}
 }
 
 GA_Migration* GA_Migration::GetCurInstance()
 {
-	if (!m_migInstance) 
-		return new GA_Migration();
+	if (!m_migInstance) {
+		m_migInstance = new GA_Migration();
+		return m_migInstance;
+	}
+		
 	return m_migInstance;
 }
 
 void GA_Migration::SafeExit()
 {
-	m_blocks.clear();
-	m_files.clear();
+	(m_blocks).clear();
+	(m_files).clear();
 	this->DeleteCurInstance();
 }
 
@@ -93,10 +106,10 @@ void GA_Migration::InitBlockVector(ifstream& input)
 				block_id = InputHelper(input);
 				num_files = InputHelper(input);
 				n_files = stoi(num_files);
-				m_blocks[block_sn] = Ded_Block(stoi(block_sn), block_id, n_files);
+				(m_blocks)[block_sn] = Ded_Block(stoi(block_sn), block_id, n_files);
 				for (int i = 0; i < n_files; i++) {
 					file_sn = InputHelper(input);
-					m_blocks[block_sn].AddFile(m_files[file_sn]);
+					(m_blocks)[block_sn].AddFile((m_files)[file_sn]);
 				}
 				length = input.tellg();
 				length++;
@@ -106,11 +119,14 @@ void GA_Migration::InitBlockVector(ifstream& input)
 	}
 }
 
-void GA_Migration::InitFileVector(ifstream& input, map<string, string>& blocks, map<string, vector<string>>& f_b)
-{
+void GA_Migration::InitFileVector(ifstream & input, map<string, string> &blocks, map<string, vector<string>> &f_b) {
 	string line;
-	string file_sn, file_id, dir_sn, num_blocks;
-	string block_sn, block_size;
+	string file_sn,
+		   file_id, 
+		   dir_sn,
+		   num_blocks;
+	string block_sn,
+		   block_size;
 	char ch;
 	bool main_flag = true, flag = true;
 	int n_blocks;
@@ -122,7 +138,7 @@ void GA_Migration::InitFileVector(ifstream& input, map<string, string>& blocks, 
 	// start processing the blocks within the textf=file
 	while (main_flag) {
 		getline(input, line);
-		if (line.find("F,") == string::npos)		 // save the position of the files
+		if ((line).find("F,") == string::npos)		 // save the position of the files
 			length = input.tellg();
 		else {
 			while (IsFirstChar(input, 'F') || flag) {	 // start processing the files
@@ -140,16 +156,15 @@ void GA_Migration::InitFileVector(ifstream& input, map<string, string>& blocks, 
 				dir_sn = InputHelper(input);
 				num_blocks = InputHelper(input);
 				n_blocks = stoul(num_blocks);
-				m_files[file_sn] = Ded_File(stoul(file_sn), file_id, stoul(dir_sn), n_blocks);
-				if (file_sn.compare("2597") == 0) { 
-					ch = ' ';
-				}
+				Ded_File temp = Ded_File(stoul(file_sn), file_id, stoul(dir_sn), n_blocks);
+				string fsn = file_sn;
+				(m_files)[fsn] = temp;
 				for (int i = 0; i < n_blocks; i++) {
 					block_sn = InputHelper(input);
 					block_size = InputHelper(input);
 					// Update helper hash-maps to later connect the bipartite-graph
-					blocks[block_sn] = block_size;
-					f_b[file_sn].push_back(block_sn);
+					(blocks)[block_sn] = block_size;
+					(f_b)[file_sn].push_back(block_sn);
 				}
 			}
 		}
@@ -157,18 +172,18 @@ void GA_Migration::InitFileVector(ifstream& input, map<string, string>& blocks, 
 	}
 }
 
-void GA_Migration::ConnectBlockAndFiles(map<string, string> &block_sizes, map<string, vector<string>> &f_b)
+void GA_Migration::ConnectBlockAndFiles(map<string, string>& block_sizes, map<string, vector<string>>& f_b)
 {
-	for(auto const& it : block_sizes){				// for every block
-		//	Update it size
-		m_blocks[it.first].setBlockSize(stoi(it.second));
-		mig_props.g_totalKB += stoi(it.second);		// Sum the size (in bytes) of all blocks
+	for (auto const& it : block_sizes) {				// for every block
+														//	Update it size
+		(m_blocks)[it.first].setBlockSize(stoi(it.second));
+		(mig_props).g_totalKB += stoi(it.second);		// Sum the size (in bytes) of all blocks
 	}
-	mig_props.g_totalKB /= (10 ^ 3);				// In KB
+	(mig_props).g_totalKB /= (10 ^ 3);				// In KB
 	for (auto const& it : f_b) {					// for every file
 		for (auto const& sub_it : it.second) {		// check associated blocks to it
-			//	Update pointer to the reference of the associated blocks
-			m_files[it.first].UpdateBlockSN(m_blocks[sub_it]);
+													//	Update pointer to the reference of the associated blocks
+			(m_files)[it.first].UpdateBlockSN((m_blocks)[sub_it]);
 		}
 	}
 }
@@ -199,6 +214,5 @@ string GA_Migration::InputHelper(ifstream &in)
 void GA_Migration::RunGeneticAlgo()
 {
 	GA_Population firstPop(10);	// firstPop holds 
-
 }
 
