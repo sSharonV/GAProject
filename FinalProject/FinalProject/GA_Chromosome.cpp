@@ -24,8 +24,8 @@ void GA_Chromosome::setSizeInBytes(unsigned long s)
 void GA_Chromosome::InitSolution()
 {
 	// pointer to GA_Migration/GA_Evolution - for pulling information
-	GA_Migration *mig_ptr = GA_Migration::GetCurInstance();
-	GA_Evolution *evo_ptr = GA_Evolution::GetCurInstance();
+	shared_ptr<GA_Migration> mig_ptr(GA_Migration::GetCurInstance());
+	shared_ptr<GA_Evolution> evo_ptr(GA_Evolution::GetCurInstance());
 
 	// Reference to bipartite-graph
 	map<string, Ded_Block> t_blocks = mig_ptr->GetBlocks();
@@ -74,8 +74,7 @@ void GA_Chromosome::InitSolution()
 			else {										// If g_solSize was updated - update start time for interval check....
 				start = chrono::high_resolution_clock::now();
 				curr_size = g_solSize;
-			}
-				
+			}	
 		}
 	} while (g_solSize < g_solLimit && !stop_attach);
 

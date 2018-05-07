@@ -6,7 +6,8 @@ GA_Migration::GA_Migration(){
 	// 
 	//	Example of how to initialize shared_ptr of map
 	//
-
+	//m_blocks = map<string, Ded_Block>();
+	//m_files = map<string, Ded_File>();
 	//using t_blocks = map<string, Ded_Block>;
 	//using il_blocks = initializer_list<t_blocks::value_type>;
 	//using  t_files = map<string, Ded_File>;
@@ -16,7 +17,20 @@ GA_Migration::GA_Migration(){
 	//m_files = make_shared<t_files>(
 	//	il_files{});
 	//mig_props = make_shared<general_prop>();
+
 }
+
+
+/*GA_Migration::~GA_Migration()
+{
+	//delete m_migInstance;
+}*/
+
+GA_Migration::GA_Migration(const GA_Migration & other)
+{
+	m_blocks = other.GetBlocks();
+}
+
 
 void GA_Migration::InitBipartiteGraph(ifstream &input)
 {
@@ -32,13 +46,18 @@ void GA_Migration::SetGeneralProperties(general_prop &properties)
 	(mig_props).g_sel_mode = properties.g_sel_mode;
 	(mig_props).g_cros_mode = properties.g_cros_mode;
 	(mig_props).g_mut_mode = properties.g_mut_mode;
+	(mig_props).g_population_size = properties.g_population_size;
 	(mig_props).g_over_percent = properties.g_over_percent;
 	(mig_props).g_generations = properties.g_generations;
 	(mig_props).g_elit_best = properties.g_elit_best;
 	(mig_props).g_start_fix = properties.g_start_fix;
 	(mig_props).g_epsilon = properties.g_epsilon;
+	(mig_props).g_eps_size = properties.g_eps_size;
 	(mig_props).trueFor_KB = properties.trueFor_KB;
-	if ((mig_props).trueFor_KB) (mig_props).g_kb = properties.g_kb;
+	if ((mig_props).trueFor_KB) {
+		(mig_props).g_kb = properties.g_kb;
+		(mig_props).g_kb_size = properties.g_kb_size;
+	}
 	else (mig_props).g_percent = properties.g_percent;
 }
 
@@ -64,12 +83,17 @@ unsigned long GA_Migration::GetMinBlockSize()
 	return m_min_block_size.second;
 }
 
+const map<string, Ded_Block>& GA_Migration::GetBlocks() const
+{
+	return m_blocks;
+}
+
 map<string, Ded_Block>& GA_Migration::GetBlocks()
 {
 	return m_blocks;
 }
 
-map<string, Ded_File>& GA_Migration::GetFiles()
+const map<string, Ded_File>& GA_Migration::GetFiles()
 {
 	return m_files;
 }
@@ -79,15 +103,12 @@ general_prop & GA_Migration::GetProperties()
 	return mig_props;
 }
 
-GA_Migration* GA_Migration::GetCurInstance()
+GA_Migration * GA_Migration::GetCurInstance()
 {
-	if (!m_migInstance) {
-		m_migInstance = new GA_Migration();
-		return m_migInstance;
-	}
-		
-	return m_migInstance;
+	static GA_Migration m_migInstance;					// Automatically sets to null pointer
+	return &m_migInstance;
 }
+
 
 /*
 SafeExit() clears the maps of blocks and files.
@@ -98,12 +119,55 @@ void GA_Migration::SafeExit()
 {
 	(m_blocks).clear();
 	(m_files).clear();
-	this->DeleteCurInstance();
 }
 
-void GA_Migration::DeleteCurInstance()
+void GA_Migration::InitKBForMig()
 {
-	delete m_migInstance;
+
+	// Updates the size properties according to its measurments
+	switch (mig_props.g_eps_size)
+	{
+		case BytesMeasure::kilo: {
+			mig_props.g_epsilon = (mig_props.g_epsilon)*(1024);
+			break;
+		}
+		case BytesMeasure::mega: {
+			mig_props.g_epsilon = (mig_props.g_epsilon)*(pow(1024,2));
+			break;
+		}
+		case BytesMeasure::giga: {
+			mig_props.g_epsilon = (mig_props.g_epsilon)*(pow(1024, 3));
+			break;
+		}
+		default:
+			break;
+	}
+	if (mig_props.trueFor_KB) {
+		// Updates the size properties according to its measurments
+		switch (mig_props.g_kb_size)
+		{
+		case BytesMeasure::kilo: {
+			mig_props.g_kb = (mig_props.g_kb)*(1024);
+			break;
+		}
+		case BytesMeasure::mega: {
+			mig_props.g_kb = (mig_props.g_kb)*(pow(1024, 2));
+			break;
+		}
+		case BytesMeasure::giga: {
+			mig_props.g_kb = (mig_props.g_kb)*(pow(1024, 3));
+			break;
+		}
+		default:
+			break;
+		}
+		mig_props.g_KBforMig = (mig_props.g_epsilon + mig_props.g_kb);
+		mig_props.g_KBforMig *= ((100 + mig_props.g_over_percent) / 100);
+	}
+	else {
+		mig_props.g_KBforMig = mig_props.g_totalKB * ((mig_props.g_percent) / 100);
+		mig_props.g_KBforMig *= ((100 + mig_props.g_over_percent) / 100);
+	}
 }
 
 void GA_Migration::InitBlockVector(ifstream& input)
@@ -254,8 +318,10 @@ string GA_Migration::InputHelper(ifstream &in)
 
 void GA_Migration::RunGeneticAlgo()
 {
-	GA_Evolution ga_evo;
-	ga_evo.InitEvolution();
-	ga_evo.StartEvolution();
+	InitKBForMig();
+	shared_ptr<GA_Evolution> ga_evo(GA_Evolution::GetCurInstance());
+	ga_evo->InitEvolution();
+	ga_evo->StartEvolution();
 }
+
 
