@@ -22,6 +22,14 @@ string Ded_File::GetSN()
 	return to_string(f_sn);
 }
 
+/*
+	Returns the reference of the file's blocks (which is shared_ptr)
+*/
+map<string, Ded_Block*>& Ded_File::GetMyBlocks()
+{
+	return (*f_blocks);
+}
+
 void Ded_File::UpdateBlockSN(Ded_Block& block)
 {
 	(*f_blocks)[block.GetSN()] = &block;

@@ -20,5 +20,6 @@ public:
 	Ded_File(unsigned int sn = 0, string id = "", unsigned int dir_sn = 0, int num_blocks = 0);
 	~Ded_File();
 	string GetSN();
+	map<string, Ded_Block*>& GetMyBlocks();
 	void UpdateBlockSN(Ded_Block &block);
 };

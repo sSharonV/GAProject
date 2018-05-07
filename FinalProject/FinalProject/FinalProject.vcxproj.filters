@@ -16,47 +16,41 @@
     <Filter Include="Header Files\Selection">
       <UniqueIdentifier>{7edd3450-f149-4949-ac79-da87f4f3401d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Crossover">
+      <UniqueIdentifier>{8b653d21-f8f0-47bb-91c5-9aea8c16ffea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Mutation">
+      <UniqueIdentifier>{9306998d-2a6a-4260-a15f-9946d3f8e584}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Ded_Elements">
+      <UniqueIdentifier>{e50a927a-1dfb-4f28-b9ca-b3bd43886b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Migration">
+      <UniqueIdentifier>{4312af9d-4ac3-4eec-bdf9-78496724e5ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Evolution">
+      <UniqueIdentifier>{aed4d0ba-c147-437c-9bd5-1fb1bbc8ce66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Crossover">
+      <UniqueIdentifier>{28d03c57-2426-462e-a903-934cade467ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Mutation">
+      <UniqueIdentifier>{b094e979-1155-45b3-8164-60a44bb5662f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Ded_Elements">
+      <UniqueIdentifier>{7d021b28-8f19-409f-8d33-339ac81acf52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Migration">
+      <UniqueIdentifier>{684e43b6-ba35-418d-a35b-1481c4f60ec4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Evolution">
+      <UniqueIdentifier>{cd439de2-eb14-46a6-a170-84294f309c11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Selection">
+      <UniqueIdentifier>{adb8f1fb-02e0-459a-a7bd-98daca82137f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="FinalProject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FinalProjectDlg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="stdafx.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ded_Block.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ded_File.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_Migration.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_Population.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_Chromosome.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_Evolution.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_Crossover.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_Mutation.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GA_Selection.h">
       <Filter>Header Files\Selection</Filter>
     </ClInclude>
@@ -69,37 +63,79 @@
     <ClInclude Include="GA_SelectionTS.h">
       <Filter>Header Files\Selection</Filter>
     </ClInclude>
+    <ClInclude Include="Ded_Block.h">
+      <Filter>Header Files\Ded_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Ded_File.h">
+      <Filter>Header Files\Ded_Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Crossover.h">
+      <Filter>Header Files\Crossover</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Mutation.h">
+      <Filter>Header Files\Mutation</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Chromosome.h">
+      <Filter>Header Files\Evolution</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Population.h">
+      <Filter>Header Files\Evolution</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Evolution.h">
+      <Filter>Header Files\Evolution</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Migration.h">
+      <Filter>Header Files\Migration</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Header Files\Migration</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header Files\Migration</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Header Files\Migration</Filter>
+    </ClInclude>
+    <ClInclude Include="FinalProjectDlg.h">
+      <Filter>Header Files\Migration</Filter>
+    </ClInclude>
+    <ClInclude Include="FinalProject.h">
+      <Filter>Header Files\Migration</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="FinalProject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FinalProjectDlg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Ded_Block.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Ded_Elements</Filter>
     </ClCompile>
     <ClCompile Include="Ded_File.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Ded_Elements</Filter>
     </ClCompile>
     <ClCompile Include="GA_Migration.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GA_Chromosome.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GA_Population.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GA_Selection.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Migration</Filter>
     </ClCompile>
     <ClCompile Include="GA_SelectionTS.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_Selection.cpp">
+      <Filter>Source Files\Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_Chromosome.cpp">
+      <Filter>Source Files\Evolution</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_Evolution.cpp">
+      <Filter>Source Files\Evolution</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_Population.cpp">
+      <Filter>Source Files\Evolution</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files\Migration</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalProjectDlg.cpp">
+      <Filter>Source Files\Migration</Filter>
+    </ClCompile>
+    <ClCompile Include="FinalProject.cpp">
+      <Filter>Source Files\Migration</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
