@@ -5,6 +5,7 @@
 #include <chrono>
 
 using namespace std;
+/*
 class GA_Population;
 
 class GA_Chromosome {
@@ -20,3 +21,4 @@ public:
 private:
 	void setSizeInBytes(unsigned long s);
 };
+*/

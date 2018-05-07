@@ -1,5 +1,5 @@
 #include "GA_Evolution.h"
-
+/*
 GA_Evolution::GA_Evolution()
 {
 	GA_Migration* mig_ptr = new GA_Migration();
@@ -46,11 +46,11 @@ void GA_Evolution::InitEvolution()
 	printf("Hey");
 }
 
-/*
+
 	StartEvolution() takes care of generating initial population
 	-	Consists of chromosomes which generates by a random attachment of blocks to a chromosome,
 		up to a given size by the user
-*/
+
 void GA_Evolution::StartEvolution()
 {
 	//m_popu->Initialize();
@@ -61,3 +61,4 @@ GA_Evolution * GetCurEvoInstance()
 {
 	return nullptr;
 }
+*/

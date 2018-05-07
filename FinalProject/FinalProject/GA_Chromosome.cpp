@@ -1,5 +1,6 @@
 #include "GA_Chromosome.h"
 
+/*
 GA_Chromosome::GA_Chromosome(unsigned long limit) : g_solLimit(limit)
 {
 	g_solution = vector<bool>(GA_Migration::GetCurInstance()->GetBlocks().size());
@@ -15,12 +16,13 @@ void GA_Chromosome::setSizeInBytes(unsigned long s)
 {
 	g_solSize = s;
 }
-
+*/
 /*
 	InitSolution() takes care of initializing chromosome with feasible solution
 	-	The solution stand the user requierments for migration size
 	-	Chromosome has map of it's pointed blocks
 */
+/*
 void GA_Chromosome::InitSolution()
 {
 	// pointer to GA_Migration/GA_Evolution - for pulling information
@@ -94,3 +96,4 @@ void GA_Chromosome::InitSolution()
 		}
 	}
 }
+*/

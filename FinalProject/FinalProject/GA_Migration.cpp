@@ -319,9 +319,11 @@ string GA_Migration::InputHelper(ifstream &in)
 void GA_Migration::RunGeneticAlgo()
 {
 	InitKBForMig();
+	/*
 	shared_ptr<GA_Evolution> ga_evo(GA_Evolution::GetCurInstance());
 	ga_evo->InitEvolution();
 	ga_evo->StartEvolution();
+	*/
 }
 
 
