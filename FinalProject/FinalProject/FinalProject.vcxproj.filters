@@ -101,6 +101,9 @@
     <ClCompile Include="GA_SelectionTS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GA_Evolution.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FinalProject.rc">

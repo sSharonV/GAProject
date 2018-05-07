@@ -2,6 +2,11 @@
 #include "GA_Migration.h"
 
 GA_Migration::GA_Migration(){
+
+	// 
+	//	Example of how to initialize shared_ptr of map
+	//
+
 	//using t_blocks = map<string, Ded_Block>;
 	//using il_blocks = initializer_list<t_blocks::value_type>;
 	//using  t_files = map<string, Ded_File>;
@@ -20,9 +25,6 @@ void GA_Migration::InitBipartiteGraph(ifstream &input)
 	InitFileVector(input, blocks_size, files_blocks);
 	InitBlockVector(input);
 	ConnectBlockAndFiles(blocks_size, files_blocks);
-	// free the hash-maps memmory - size = 0
-	//(*blocks_size).clear();
-	//(*files_blocks).clear();
 }
 
 void GA_Migration::SetGeneralProperties(general_prop &properties)
@@ -40,16 +42,41 @@ void GA_Migration::SetGeneralProperties(general_prop &properties)
 	else (mig_props).g_percent = properties.g_percent;
 }
 
-unsigned long GA_Migration::GetSolutionLimitSize()
+long double GA_Migration::GetSolutionLimitSize()
 {
 	if ((mig_props).trueFor_KB) {	// return the number of KB (10^3B)
 		return (mig_props).g_kb;
 	}
 	else {
 		long double size;
-		size = ((mig_props).g_totalKB) * ((mig_props).g_percent);
+		size = (long double)((mig_props).g_totalKB) * ((mig_props).g_percent);
 		return size;
 	}
+}
+
+long double GA_Migration::GetSystemSize()
+{
+	return mig_props.g_totalKB;
+}
+
+unsigned long GA_Migration::GetMinBlockSize()
+{
+	return m_min_block_size.second;
+}
+
+map<string, Ded_Block>& GA_Migration::GetBlocks()
+{
+	return m_blocks;
+}
+
+map<string, Ded_File>& GA_Migration::GetFiles()
+{
+	return m_files;
+}
+
+general_prop & GA_Migration::GetProperties()
+{
+	return mig_props;
 }
 
 GA_Migration* GA_Migration::GetCurInstance()
@@ -62,6 +89,11 @@ GA_Migration* GA_Migration::GetCurInstance()
 	return m_migInstance;
 }
 
+/*
+SafeExit() clears the maps of blocks and files.
+-	deletes the pointer to GA_Migration reference
+-	shared_ptr
+*/
 void GA_Migration::SafeExit()
 {
 	(m_blocks).clear();
@@ -77,11 +109,10 @@ void GA_Migration::DeleteCurInstance()
 void GA_Migration::InitBlockVector(ifstream& input)
 {
 	string line;
-	char ch;
 	string block_sn, block_id, num_files;
 	string file_sn;
 	int n_files;
-	int length = 0, last_length = 0;
+	unsigned long length = 0, last_length = 0;
 	bool main_flag = true, flag = false;
 
 	// guerantee pointing to start of input file
@@ -92,12 +123,12 @@ void GA_Migration::InitBlockVector(ifstream& input)
 		getline(input, line);
 		if (line.find("B,") == string::npos) {		 // save the position of the files
 			last_length = length;					// position of start of line
-			length = input.tellg();					// position of end of line
+			length = (unsigned long)(input.tellg());					// position of end of line
 		}
 		else {
 			//input.seekg(last_length);
 			input.seekg(180694); //180694[ths=0.1], 451660[ths=1]	// TODO: find the right combination to start from.
-			length = input.tellg();
+			length = (unsigned long)(input.tellg());
 			flag = true;
 			while (IsFirstChar(input, 'B') && flag) {	 // start processing the files
 				//input.seekg(length - 91 + 2);			 
@@ -111,7 +142,7 @@ void GA_Migration::InitBlockVector(ifstream& input)
 					file_sn = InputHelper(input);
 					(m_blocks)[block_sn].AddFile((m_files)[file_sn]);
 				}
-				length = input.tellg();
+				length = (unsigned long)(input.tellg());
 				length++;
 			}
 		}
@@ -127,10 +158,9 @@ void GA_Migration::InitFileVector(ifstream & input, map<string, string> &blocks,
 		   num_blocks;
 	string block_sn,
 		   block_size;
-	char ch;
 	bool main_flag = true, flag = true;
 	int n_blocks;
-	int length;
+	unsigned long length;
 
 	// guerantee pointing to start of input file
 	input.clear();
@@ -139,16 +169,16 @@ void GA_Migration::InitFileVector(ifstream & input, map<string, string> &blocks,
 	while (main_flag) {
 		getline(input, line);
 		if ((line).find("F,") == string::npos)		 // save the position of the files
-			length = input.tellg();
+			length = (unsigned long)(input.tellg());
 		else {
 			while (IsFirstChar(input, 'F') || flag) {	 // start processing the files
 				if (flag) {
 					input.seekg(length - 8);					// start at the beggining of the file sequence
-					length = input.tellg();
+					length = (unsigned long)(input.tellg());
 					flag = false;
 				}
 				else {
-					length = input.tellg();
+					length = (unsigned long)(input.tellg());
 					input.seekg(length + 3);
 				}
 				file_sn = InputHelper(input);
@@ -186,12 +216,23 @@ void GA_Migration::ConnectBlockAndFiles(map<string, string>& block_sizes, map<st
 			(m_files)[it.first].UpdateBlockSN((m_blocks)[sub_it]);
 		}
 	}
+	auto t_it = block_sizes.begin();
+	unsigned long min = stoul(t_it->second);
+	m_min_block_size.first = t_it->first;
+	m_min_block_size.second = min;
+	for (auto it : block_sizes) {
+		if (min > stoul(it.second)) {
+			min = stoul(it.second);
+			m_min_block_size.first = it.first;
+			m_min_block_size.second = min;
+		}
+	}
 }
 
 bool GA_Migration::IsFirstChar(ifstream & in, char ch)
 {
 	char c;
-	int cur_pos = in.tellg();
+	unsigned long cur_pos = (unsigned long)(in.tellg());
 	in >> c;
 	in.seekg(cur_pos);
 	if (c == ch) return true;
@@ -213,6 +254,8 @@ string GA_Migration::InputHelper(ifstream &in)
 
 void GA_Migration::RunGeneticAlgo()
 {
-	GA_Population firstPop(10);	// firstPop holds 
+	GA_Evolution ga_evo;
+	ga_evo.InitEvolution();
+	ga_evo.StartEvolution();
 }
 
