@@ -1,7 +1,7 @@
 #pragma once
 #include "GA_Evolution.h" 
 #include "GA_Chromosome.h"
-
+/*
 using namespace std;
 /*
 class GA_Chromosome;

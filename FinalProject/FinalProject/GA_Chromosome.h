@@ -5,9 +5,8 @@
 #include <chrono>
 
 using namespace std;
-/*
 class GA_Population;
-
+/*
 class GA_Chromosome {
 	vector<bool> g_solution;
 	map<unsigned long, Ded_Block*> g_blocks;

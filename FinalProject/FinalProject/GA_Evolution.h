@@ -3,7 +3,6 @@
 #include "GA_Population.h"
 //#include "GA_Chromosome.h"
 using namespace std;
-
 /*
 class GA_Population;
 
