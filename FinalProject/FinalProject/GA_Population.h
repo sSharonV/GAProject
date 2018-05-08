@@ -1,7 +1,7 @@
 #pragma once
 #include "GA_Evolution.h" 
 #include "GA_Chromosome.h"
-
+/*
 using namespace std;
 
 class GA_Chromosome;
@@ -13,4 +13,4 @@ class GA_Population {
 public:
 	GA_Population(int size = 10);
 	bool Initialize();
-};
+};*/

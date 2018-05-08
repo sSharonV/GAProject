@@ -3,7 +3,7 @@
 #include "GA_Population.h"
 //#include "GA_Chromosome.h"
 using namespace std;
-
+/*
 class GA_Population;
 
 class GA_Evolution {
@@ -18,3 +18,4 @@ public:
 	void InitEvolution();
 	void StartEvolution();
 };
+*/

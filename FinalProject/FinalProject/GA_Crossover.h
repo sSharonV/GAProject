@@ -4,6 +4,8 @@
 
 class GA_Crossover {
 public:
+	/*
 	GA_Crossover(int crossover_mode) {
 	}
+	*/
 };

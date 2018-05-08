@@ -38,26 +38,23 @@ struct general_prop{
 	long double g_KBforMig;
 };
 
-
-
 class GA_Migration {
-	map<string, Ded_Block> m_blocks;
-	map<string, Ded_File> m_files;
-	general_prop mig_props;
+	shared_ptr<map<string, shared_ptr<Ded_Block>>> m_blocks;
+	shared_ptr<map<string, shared_ptr<Ded_File>>> m_files;
+	shared_ptr<general_prop> mig_props;
 	//GA_Migration* m_migInstance;
 	pair<string,unsigned long> m_min_block_size;
-
+	//static GA_Migration m_migInstance;
+	
 public:
-	static GA_Migration* GetCurInstance();	// For any further use...
-	GA_Migration();	// Default constructor (does nothing..)
+	//static shared_ptr<GA_Migration> GetCurInstance(GA_Migration instance);
+	static shared_ptr<GA_Migration> GetCurInstance();	// For any further use...
+	
 	//~GA_Migration();
-	GA_Migration(const GA_Migration &other);
+	//GA_Migration(const GA_Migration &other);
 	void InitBipartiteGraph(ifstream &input);
 	void SetGeneralProperties(general_prop &properties);
-	general_prop& GetProperties();
-
-					
-
+	general_prop GetProperties();
 	void SafeExit();
 	void RunGeneticAlgo();
 	long double GetSolutionLimitSize();
@@ -67,15 +64,16 @@ public:
 		Return the referenece of original maps
 		-	In order to reuse the memory of the allocated objects
 	*/
-	map<string, Ded_Block>& GetBlocks();
-	const map<string, Ded_Block>& GetBlocks() const;
-	const map<string, Ded_File>& GetFiles();
+	shared_ptr<map<string, shared_ptr<Ded_Block>>> GetBlocks();
+	//const map<string, Ded_Block>& GetBlocks() const;
+	shared_ptr<map<string, shared_ptr<Ded_File>>> GetFiles();
 
 private:
+	GA_Migration();	// Default constructor (does nothing..)
 	void InitKBForMig();
 	void InitBlockVector(ifstream &input);
-	void InitFileVector(ifstream & input, map<string, string> &blocks, map<string, vector<string>> &f_b);
-	void ConnectBlockAndFiles(map<string, string>& block_sizes, map<string, vector<string>>&f_b);
+	void InitFileVector(ifstream & input, shared_ptr<map<string, string>> blocks, shared_ptr<map<string, vector<string>>> f_b);
+	void ConnectBlockAndFiles(shared_ptr<map<string, string>> block_sizes, shared_ptr<map<string, vector<string>>> f_b);
 	string InputHelper(ifstream &in);
 	bool IsFirstChar(ifstream &in, char ch);
 	//static void DeleteCurInstance();

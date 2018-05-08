@@ -1,23 +1,17 @@
 #include "stdafx.h"
 #include "GA_Migration.h"
 
+//shared_ptr<GA_Migration> GA_Migration::m_migInstance = make_shared<GA_Migration>(GA_Migration());
+
 GA_Migration::GA_Migration(){
 
-	// 
-	//	Example of how to initialize shared_ptr of map
-	//
-	//m_blocks = map<string, Ded_Block>();
-	//m_files = map<string, Ded_File>();
-	//using t_blocks = map<string, Ded_Block>;
-	//using il_blocks = initializer_list<t_blocks::value_type>;
-	//using  t_files = map<string, Ded_File>;
-	//using il_files = initializer_list<t_files::value_type>;
-	//m_blocks =  make_shared<t_blocks>(
-	//	il_blocks{});
-	//m_files = make_shared<t_files>(
-	//	il_files{});
-	//mig_props = make_shared<general_prop>();
-
+	mig_props = make_shared<general_prop>();
+	using t_blocks = map<string, shared_ptr<Ded_Block>>;
+	using il_blocks = initializer_list<t_blocks::value_type>;
+	using  t_files = map<string, shared_ptr<Ded_File>>;
+	using il_files = initializer_list<t_files::value_type>;
+	m_blocks =  make_shared<t_blocks>(il_blocks{});
+	m_files = make_shared<t_files>(il_files{});
 }
 
 
@@ -26,16 +20,21 @@ GA_Migration::GA_Migration(){
 	//delete m_migInstance;
 }*/
 
+/*
 GA_Migration::GA_Migration(const GA_Migration & other)
 {
 	m_blocks = other.GetBlocks();
-}
+}*/
 
 
 void GA_Migration::InitBipartiteGraph(ifstream &input)
 {
-	map<string, string> blocks_size;
-	map<string, vector<string>> files_blocks;
+	using t_blocks = map<string, string>;
+	using il_blocks = initializer_list<t_blocks::value_type>;
+	using  t_files = map<string, vector<string>>;
+	using il_files = initializer_list<t_files::value_type>;
+	shared_ptr<map<string, string>> blocks_size = make_shared<t_blocks>(il_blocks{});;
+	shared_ptr<map<string, vector<string>>> files_blocks = make_shared<t_files>(il_files{});;
 	InitFileVector(input, blocks_size, files_blocks);
 	InitBlockVector(input);
 	ConnectBlockAndFiles(blocks_size, files_blocks);
@@ -43,39 +42,39 @@ void GA_Migration::InitBipartiteGraph(ifstream &input)
 
 void GA_Migration::SetGeneralProperties(general_prop &properties)
 {
-	(mig_props).g_sel_mode = properties.g_sel_mode;
-	(mig_props).g_cros_mode = properties.g_cros_mode;
-	(mig_props).g_mut_mode = properties.g_mut_mode;
-	(mig_props).g_population_size = properties.g_population_size;
-	(mig_props).g_over_percent = properties.g_over_percent;
-	(mig_props).g_generations = properties.g_generations;
-	(mig_props).g_elit_best = properties.g_elit_best;
-	(mig_props).g_start_fix = properties.g_start_fix;
-	(mig_props).g_epsilon = properties.g_epsilon;
-	(mig_props).g_eps_size = properties.g_eps_size;
-	(mig_props).trueFor_KB = properties.trueFor_KB;
-	if ((mig_props).trueFor_KB) {
-		(mig_props).g_kb = properties.g_kb;
-		(mig_props).g_kb_size = properties.g_kb_size;
+	(mig_props)->g_sel_mode = properties.g_sel_mode;
+	(mig_props)->g_cros_mode = properties.g_cros_mode;
+	(mig_props)->g_mut_mode = properties.g_mut_mode;
+	(mig_props)->g_population_size = properties.g_population_size;
+	(mig_props)->g_over_percent = properties.g_over_percent;
+	(mig_props)->g_generations = properties.g_generations;
+	(mig_props)->g_elit_best = properties.g_elit_best;
+	(mig_props)->g_start_fix = properties.g_start_fix;
+	(mig_props)->g_epsilon = properties.g_epsilon;
+	(mig_props)->g_eps_size = properties.g_eps_size;
+	(mig_props)->trueFor_KB = properties.trueFor_KB;
+	if ((mig_props)->trueFor_KB) {
+		(mig_props)->g_kb = properties.g_kb;
+		(mig_props)->g_kb_size = properties.g_kb_size;
 	}
-	else (mig_props).g_percent = properties.g_percent;
+	else (mig_props)->g_percent = properties.g_percent;
 }
 
 long double GA_Migration::GetSolutionLimitSize()
 {
-	if ((mig_props).trueFor_KB) {	// return the number of KB (10^3B)
-		return (mig_props).g_kb;
+	if ((mig_props)->trueFor_KB) {	// return the number of KB (10^3B)
+		return (mig_props)->g_kb;
 	}
 	else {
 		long double size;
-		size = (long double)((mig_props).g_totalKB) * ((mig_props).g_percent);
+		size = (long double)((mig_props)->g_totalKB) * ((mig_props)->g_percent);
 		return size;
 	}
 }
 
 long double GA_Migration::GetSystemSize()
 {
-	return mig_props.g_totalKB;
+	return mig_props->g_totalKB;
 }
 
 unsigned long GA_Migration::GetMinBlockSize()
@@ -83,30 +82,27 @@ unsigned long GA_Migration::GetMinBlockSize()
 	return m_min_block_size.second;
 }
 
-const map<string, Ded_Block>& GA_Migration::GetBlocks() const
+
+shared_ptr<map<string, shared_ptr<Ded_Block>>> GA_Migration::GetBlocks()
 {
 	return m_blocks;
 }
 
-map<string, Ded_Block>& GA_Migration::GetBlocks()
-{
-	return m_blocks;
-}
-
-const map<string, Ded_File>& GA_Migration::GetFiles()
+shared_ptr<map<string, shared_ptr<Ded_File>>> GA_Migration::GetFiles()
 {
 	return m_files;
 }
 
-general_prop & GA_Migration::GetProperties()
+general_prop GA_Migration::GetProperties()
 {
-	return mig_props;
+	return *mig_props;
 }
 
-GA_Migration * GA_Migration::GetCurInstance()
+shared_ptr<GA_Migration> GA_Migration::GetCurInstance()
 {
-	static GA_Migration m_migInstance;					// Automatically sets to null pointer
-	return &m_migInstance;
+	static shared_ptr<GA_Migration> m_migInstance;
+	if (!m_migInstance) m_migInstance = make_shared<GA_Migration>(GA_Migration());
+	return	m_migInstance;
 }
 
 
@@ -115,58 +111,64 @@ SafeExit() clears the maps of blocks and files.
 -	deletes the pointer to GA_Migration reference
 -	shared_ptr
 */
+
 void GA_Migration::SafeExit()
 {
-	(m_blocks).clear();
-	(m_files).clear();
+	using t_blocks = map<string, shared_ptr<Ded_Block>>;
+	using il_blocks = initializer_list<t_blocks::value_type>;
+	using  t_files = map<string, shared_ptr<Ded_File>>;
+	using il_files = initializer_list<t_files::value_type>;
+	m_blocks = make_shared<t_blocks>(il_blocks{});
+	m_files = make_shared<t_files>(il_files{});
+	mig_props = make_shared<general_prop>();
 }
 
 void GA_Migration::InitKBForMig()
 {
 
 	// Updates the size properties according to its measurments
-	switch (mig_props.g_eps_size)
+	switch (mig_props->g_eps_size)
 	{
 		case BytesMeasure::kilo: {
-			mig_props.g_epsilon = (mig_props.g_epsilon)*(1024);
+			mig_props->g_epsilon = (mig_props->g_epsilon)*(1024);
 			break;
 		}
 		case BytesMeasure::mega: {
-			mig_props.g_epsilon = (mig_props.g_epsilon)*(pow(1024,2));
+			mig_props->g_epsilon = (mig_props->g_epsilon)*(pow(1024,2));
 			break;
 		}
 		case BytesMeasure::giga: {
-			mig_props.g_epsilon = (mig_props.g_epsilon)*(pow(1024, 3));
+			mig_props->g_epsilon = (mig_props->g_epsilon)*(pow(1024, 3));
 			break;
 		}
 		default:
 			break;
 	}
-	if (mig_props.trueFor_KB) {
+	if (mig_props->trueFor_KB) {
 		// Updates the size properties according to its measurments
-		switch (mig_props.g_kb_size)
+		switch (mig_props->g_kb_size)
 		{
 		case BytesMeasure::kilo: {
-			mig_props.g_kb = (mig_props.g_kb)*(1024);
+			mig_props->g_kb = (mig_props->g_kb)*(1024);
 			break;
 		}
 		case BytesMeasure::mega: {
-			mig_props.g_kb = (mig_props.g_kb)*(pow(1024, 2));
+			mig_props->g_kb = (mig_props->g_kb)*(pow(1024, 2));
 			break;
 		}
 		case BytesMeasure::giga: {
-			mig_props.g_kb = (mig_props.g_kb)*(pow(1024, 3));
+			mig_props->g_kb = (mig_props->g_kb)*(pow(1024, 3));
 			break;
 		}
 		default:
 			break;
 		}
-		mig_props.g_KBforMig = (mig_props.g_epsilon + mig_props.g_kb);
-		mig_props.g_KBforMig *= ((100 + mig_props.g_over_percent) / 100);
+		mig_props->g_KBforMig = (mig_props->g_epsilon + mig_props->g_kb);
+		mig_props->g_KBforMig *= ((100 + mig_props->g_over_percent) / 100);
 	}
 	else {
-		mig_props.g_KBforMig = mig_props.g_totalKB * ((mig_props.g_percent) / 100);
-		mig_props.g_KBforMig *= ((100 + mig_props.g_over_percent) / 100);
+		mig_props->g_KBforMig = mig_props->g_totalKB * ((mig_props->g_percent) / 100);
+		mig_props->g_KBforMig *= ((100 + mig_props->g_over_percent) / 100);
 	}
 }
 
@@ -201,10 +203,12 @@ void GA_Migration::InitBlockVector(ifstream& input)
 				block_id = InputHelper(input);
 				num_files = InputHelper(input);
 				n_files = stoi(num_files);
-				(m_blocks)[block_sn] = Ded_Block(stoi(block_sn), block_id, n_files);
+
+				shared_ptr<Ded_Block> temp(make_shared<Ded_Block>(Ded_Block(stoi(block_sn), block_id, n_files)));
+				(*m_blocks)[block_sn] = temp;
 				for (int i = 0; i < n_files; i++) {
 					file_sn = InputHelper(input);
-					(m_blocks)[block_sn].AddFile((m_files)[file_sn]);
+					(*m_blocks)[block_sn]->AddFile((*m_files)[file_sn]);
 				}
 				length = (unsigned long)(input.tellg());
 				length++;
@@ -214,7 +218,7 @@ void GA_Migration::InitBlockVector(ifstream& input)
 	}
 }
 
-void GA_Migration::InitFileVector(ifstream & input, map<string, string> &blocks, map<string, vector<string>> &f_b) {
+void GA_Migration::InitFileVector(ifstream & input, shared_ptr<map<string, string>> blocks, shared_ptr<map<string, vector<string>>> f_b) {
 	string line;
 	string file_sn,
 		   file_id, 
@@ -250,15 +254,15 @@ void GA_Migration::InitFileVector(ifstream & input, map<string, string> &blocks,
 				dir_sn = InputHelper(input);
 				num_blocks = InputHelper(input);
 				n_blocks = stoul(num_blocks);
-				Ded_File temp = Ded_File(stoul(file_sn), file_id, stoul(dir_sn), n_blocks);
-				string fsn = file_sn;
-				(m_files)[fsn] = temp;
+				shared_ptr<Ded_File> temp(make_shared<Ded_File>(Ded_File(stoul(file_sn), file_id, stoul(dir_sn), n_blocks)));
+				//string fsn = file_sn;
+				(*m_files)[file_sn] = temp;
 				for (int i = 0; i < n_blocks; i++) {
 					block_sn = InputHelper(input);
 					block_size = InputHelper(input);
 					// Update helper hash-maps to later connect the bipartite-graph
-					(blocks)[block_sn] = block_size;
-					(f_b)[file_sn].push_back(block_sn);
+					(*blocks)[block_sn] = block_size;
+					(*f_b)[file_sn].push_back(block_sn);
 				}
 			}
 		}
@@ -266,25 +270,25 @@ void GA_Migration::InitFileVector(ifstream & input, map<string, string> &blocks,
 	}
 }
 
-void GA_Migration::ConnectBlockAndFiles(map<string, string>& block_sizes, map<string, vector<string>>& f_b)
+void GA_Migration::ConnectBlockAndFiles(shared_ptr<map<string, string>> block_sizes, shared_ptr<map<string, vector<string>>> f_b)
 {
-	for (auto const& it : block_sizes) {				// for every block
+	for (auto it : *block_sizes) {				// for every block
 														//	Update it size
-		(m_blocks)[it.first].setBlockSize(stoi(it.second));
-		(mig_props).g_totalKB += stoi(it.second);		// Sum the size (in bytes) of all blocks
+		(*m_blocks)[it.first]->setBlockSize(stoi(it.second));
+		(mig_props)->g_totalKB += stoi(it.second);		// Sum the size (in bytes) of all blocks
 	}
-	(mig_props).g_totalKB /= (10 ^ 3);				// In KB
-	for (auto const& it : f_b) {					// for every file
-		for (auto const& sub_it : it.second) {		// check associated blocks to it
+	(mig_props)->g_totalKB /= (10 ^ 3);				// In KB
+	for (auto it : *f_b) {					// for every file
+		for (auto sub_it : it.second) {		// check associated blocks to it
 													//	Update pointer to the reference of the associated blocks
-			(m_files)[it.first].UpdateBlockSN((m_blocks)[sub_it]);
+			(*m_files)[it.first]->UpdateBlockSN((*m_blocks)[sub_it]);
 		}
 	}
-	auto t_it = block_sizes.begin();
+	auto t_it = block_sizes->begin();
 	unsigned long min = stoul(t_it->second);
 	m_min_block_size.first = t_it->first;
 	m_min_block_size.second = min;
-	for (auto it : block_sizes) {
+	for (auto it : *block_sizes) {
 		if (min > stoul(it.second)) {
 			min = stoul(it.second);
 			m_min_block_size.first = it.first;
@@ -319,9 +323,11 @@ string GA_Migration::InputHelper(ifstream &in)
 void GA_Migration::RunGeneticAlgo()
 {
 	InitKBForMig();
+	/*
 	shared_ptr<GA_Evolution> ga_evo(GA_Evolution::GetCurInstance());
 	ga_evo->InitEvolution();
 	ga_evo->StartEvolution();
+	*/
 }
 
 

@@ -13,14 +13,15 @@ class Ded_Block {
 	string b_id;
 	int num_shared_files;
 	unsigned long size;
-	shared_ptr<map<string, Ded_File*>> b_files;
+	shared_ptr<map<string, weak_ptr<Ded_File>>> b_files;
 
 public:
 	Ded_Block(unsigned long sn = 0, string id = "", int n_s_f = 0, unsigned long s = 0);
+	Ded_Block(const Ded_Block& other);
 	~Ded_Block();
 	void setBlockSize(unsigned long s);
-	void AddFile(Ded_File &f);
+	void AddFile(shared_ptr<Ded_File> &f);
 	string GetSN();
 	unsigned long GetSize();
-	map<string, Ded_Block*> GetMyNeighboors();
+	//map<string, Ded_Block*> GetMyNeighboors();
 };
