@@ -6,12 +6,17 @@ Ded_Block::Ded_Block(unsigned long sn, string id, int n_s_f, unsigned long s)
 {
 	using t_block = map<string, weak_ptr<Ded_File>>;
 	using il_blocks = initializer_list<t_block::value_type>;
+	using t_neigh = map<string, weak_ptr<Ded_Block>>;
+	using il_neigh = initializer_list<t_neigh::value_type>;
+	neighboors = make_shared<t_neigh>(il_neigh{});
 	b_files = make_shared<t_block>(il_blocks{});
+	//neighboors = make_shared<t_neigh>(il_neigh{});
 }
 
 Ded_Block::Ded_Block(const Ded_Block & other)
 {
 	(this->b_files) = (other.b_files);
+	this->neighboors = other.neighboors;
 	this->b_id = other.b_id;
 	this->b_sn = other.b_sn;
 	this->num_shared_files = other.num_shared_files;
@@ -50,15 +55,25 @@ unsigned long Ded_Block::GetSize()
 /*
 	Returns vector of pointers to the original blocks whom connected to this block
 */
-/*
-map<string, Ded_Block*> Ded_Block::GetMyNeighboors()
+
+shared_ptr<map<string, weak_ptr<Ded_Block>>> Ded_Block::GetMyNeighboors()
 {
-	map<string, Ded_Block*> neighboors;
-	for (auto it_file : *(b_files)) {	// for every file assicated with this block
-		for (auto it_n_block : it_file.second->GetMyBlocks()) {	// check the blocks which are this neighboors
-			neighboors[it_n_block.second->GetSN()] = it_n_block.second;
+	//map<string, weak_ptr<Ded_File>>::iterator it_file;
+	
+	for (auto it_file : *b_files) 							// For each file
+		if (auto sh_file = it_file.second.lock()) {			// Retrive strong reference
+			if (sh_file->GetNumBlocks() > 1) {
+				for (auto it_block : *(sh_file->GetMyBlocks())) 	// for each associated block
+					if (auto sh_block = it_block.second.lock()) {
+						string sn = sh_block->GetSN();
+						if (neighboors->find(sn) == neighboors->end()
+							&& (sn.compare(this->GetSN()) != 0)) // the block isn't recognized as neightboor yet
+						{
+							(*neighboors)[sh_block->GetSN()] = sh_block;
+						}
+					}
+			}
 		}
-	}
 	return neighboors;
-}*/
+}
 

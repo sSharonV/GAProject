@@ -6,18 +6,18 @@
 
 using namespace std;
 class GA_Population;
-/*
+
 class GA_Chromosome {
-	vector<bool> g_solution;
-	map<unsigned long, Ded_Block*> g_blocks;
-	unsigned long g_solSize;
-	unsigned long g_solLimit;
+	shared_ptr<vector<bool>> g_solution;
+	shared_ptr<map<unsigned long, weak_ptr<Ded_Block>>> g_blocks;
+	long double g_solSize;
+	long double g_solLimit;
 public:
-	GA_Chromosome(unsigned long limit = 0);
-	unsigned long getSizeInBytes();
-	
+	GA_Chromosome(unsigned long num_blocks = 1, long double limit = 0);
+	~GA_Chromosome();
+	long double getSizeInBytes();
 	void InitSolution();
 private:
-	void setSizeInBytes(unsigned long s);
+	void setSizeInBytes(long double s);
 };
-*/
+

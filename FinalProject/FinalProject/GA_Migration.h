@@ -8,6 +8,7 @@
 #include <iostream>
 #include <map>
 #include <string>
+#include <sstream>
 #include <memory>
 
 using namespace std;
@@ -18,6 +19,18 @@ enum class Mutation { sin_point_mut, uni_point_mut };
 enum class BytesMeasure {kilo, mega, giga};
 
 class GA_Evolution;
+
+/*
+struct file_fprop {
+	string f_sn;
+	string f_id;
+	string f_dirsn;
+	string f_numb;
+};
+struct file_bprop {
+	string b_sn;
+	string b_size;
+};*/
 
 struct general_prop{
 	Selection g_sel_mode;
@@ -42,30 +55,25 @@ class GA_Migration {
 	shared_ptr<map<string, shared_ptr<Ded_Block>>> m_blocks;
 	shared_ptr<map<string, shared_ptr<Ded_File>>> m_files;
 	shared_ptr<general_prop> mig_props;
-	//GA_Migration* m_migInstance;
 	pair<string,unsigned long> m_min_block_size;
-	//static GA_Migration m_migInstance;
-	
 public:
-	//static shared_ptr<GA_Migration> GetCurInstance(GA_Migration instance);
 	static shared_ptr<GA_Migration> GetCurInstance();	// For any further use...
 	
 	//~GA_Migration();
 	//GA_Migration(const GA_Migration &other);
 	void InitBipartiteGraph(ifstream &input);
-	void SetGeneralProperties(general_prop &properties);
-	general_prop GetProperties();
+	shared_ptr<general_prop> GetProperties();
 	void SafeExit();
 	void RunGeneticAlgo();
 	long double GetSolutionLimitSize();
 	long double GetSystemSize();
 	unsigned long GetMinBlockSize();
+
 	/*
 		Return the referenece of original maps
 		-	In order to reuse the memory of the allocated objects
 	*/
 	shared_ptr<map<string, shared_ptr<Ded_Block>>> GetBlocks();
-	//const map<string, Ded_Block>& GetBlocks() const;
 	shared_ptr<map<string, shared_ptr<Ded_File>>> GetFiles();
 
 private:
@@ -74,9 +82,7 @@ private:
 	void InitBlockVector(ifstream &input);
 	void InitFileVector(ifstream & input, shared_ptr<map<string, string>> blocks, shared_ptr<map<string, vector<string>>> f_b);
 	void ConnectBlockAndFiles(shared_ptr<map<string, string>> block_sizes, shared_ptr<map<string, vector<string>>> f_b);
-	string InputHelper(ifstream &in);
-	bool IsFirstChar(ifstream &in, char ch);
-	//static void DeleteCurInstance();
+	vector<string> InputHelper(ifstream &in, string to_search, unsigned long& num);
 };
 
 

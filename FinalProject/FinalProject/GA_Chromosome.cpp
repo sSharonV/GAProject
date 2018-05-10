@@ -1,26 +1,33 @@
 #include "GA_Chromosome.h"
-/*
-GA_Chromosome::GA_Chromosome(unsigned long limit) : g_solLimit(limit)
+
+GA_Chromosome::GA_Chromosome(unsigned long num_blocks, long double limit) : g_solLimit(limit)
 {
-	g_solution = vector<bool>(GA_Migration::GetCurInstance()->GetBlocks().size());
+	using t_blocks = map<unsigned long, weak_ptr<Ded_Block>>;
+	using il_blocks = initializer_list<t_blocks::value_type>;
+	g_blocks = make_shared<t_blocks>(il_blocks{});
+	g_solution = make_shared<vector<bool>>(vector<bool>(num_blocks));
+	g_solSize = 0;
 }
 
-unsigned long GA_Chromosome::getSizeInBytes()
+GA_Chromosome::~GA_Chromosome()
+{
+}
+
+long double GA_Chromosome::getSizeInBytes()
 {
 	return g_solSize;
 }
 
-
-void GA_Chromosome::setSizeInBytes(unsigned long s)
+void GA_Chromosome::setSizeInBytes(long double s)
 {
 	g_solSize = s;
 }
 
-
+/*
 	InitSolution() takes care of initializing chromosome with feasible solution
 	-	The solution stand the user requierments for migration size
 	-	Chromosome has map of it's pointed blocks
-
+*/
 void GA_Chromosome::InitSolution()
 {
 	// pointer to GA_Migration/GA_Evolution - for pulling information
@@ -28,8 +35,8 @@ void GA_Chromosome::InitSolution()
 	shared_ptr<GA_Evolution> evo_ptr(GA_Evolution::GetCurInstance());
 
 	// Reference to bipartite-graph
-	map<string, Ded_Block> t_blocks = mig_ptr->GetBlocks();
-	map<string, Ded_File> t_files = mig_ptr->GetFiles();
+	shared_ptr<map<string, shared_ptr<Ded_Block>>> t_blocks = mig_ptr->GetBlocks();
+	shared_ptr<map<string, shared_ptr<Ded_File>>> t_files = mig_ptr->GetFiles();
 
 	// Copy map of indexes to block_sn
 	map<unsigned long, string> t_indexes = evo_ptr->GetInToKe();
@@ -44,54 +51,68 @@ void GA_Chromosome::InitSolution()
 	unsigned long i_rand;
 	srand(time(NULL));
 	auto start = chrono::high_resolution_clock::now();
+
+	/*	Testing specific blocks...
+	bool test = true;
+	*/
+
 	//	Stage 1 - Start attaching blocks up to the size of the limit
 	do {
 		// Get random block
-		
-		i_rand = rand() % t_blocks.size();
+		i_rand = rand() % t_blocks->size();
 		string b_key = t_indexes[i_rand];
-		Ded_Block* tb = &t_blocks[b_key];
+		/*	Testing specific blocks...
+		if (test) {
+			test = false;
+			b_key = "2";
+		}
+		*/
+		shared_ptr<Ded_Block> tb;
+		tb = t_blocks->find(b_key)->second;
 
 		// for blocks that are not already included in the solution
-		if (!g_solution.at(i_rand)) {	
+		if (!(g_solution)->at(i_rand)) {
 			// if the current block can be attached to stage 1
 			if (g_solSize + tb->GetSize() < g_solLimit) {
-				g_solution.at(i_rand) = true;			// TMark the block as migrating
-				g_blocks[i_rand] = tb;					// Update chromosome's map to include this neighboor
-				g_solSize += tb->GetSize();				// Update chromosome's current size 
-				if (g_solSize + mig_ptr->GetMinBlockSize() > g_solLimit) {
-					stop_attach = true;
-				}
+				g_solution->at(i_rand) = true;			// TMark the block as migrating
+				(*g_blocks)[i_rand] = tb;		// Update chromosome's map to include this neighboor
+				g_solSize += tb->GetSize();				    // Update chromosome's current size 	
 			}
-			if (curr_size == g_solSize) {				// For some reason the solution wasn't updated yet...
-				auto curr = chrono::high_resolution_clock::now();
-				elapsed = curr - start;
-				// Check if after 60 seconds there's reason to terminate
-				if (elapsed.count() > interval) {
-					stop_attach = true;
-				}
+			if (g_solSize + mig_ptr->GetMinBlockSize() > g_solLimit) {
+				stop_attach = true;
 			}
-			else {										// If g_solSize was updated - update start time for interval check....
-				start = chrono::high_resolution_clock::now();
-				curr_size = g_solSize;
-			}	
+		}
+		if (curr_size == g_solSize) {					// For some reason the solution wasn't updated yet...
+			auto curr = chrono::high_resolution_clock::now();
+			elapsed = curr - start;
+			// Check if after 60 seconds there's reason to terminate
+			if (elapsed.count() > interval) {
+				stop_attach = true;
+			}
+		}
+		else {											// If g_solSize was updated - update start time for interval check....
+			start = chrono::high_resolution_clock::now();
+			curr_size = g_solSize;
 		}
 	} while (g_solSize < g_solLimit && !stop_attach);
 
 	// Stage 2 - Add neighboors of the initial blocks
-	for (auto it_blocks : g_blocks) {											// For each initial block
+	for (auto it_blocks : *g_blocks) {											// For each initial block
 		unsigned long i;
-		map<string, Ded_Block*> t_blocks = it_blocks.second->GetMyNeighboors();	// Retrive it's neighboors
-		for (auto it_n_neigh : t_blocks) {										// For each neighboor...
-			i = t_sns[it_n_neigh.first];			// Retrieve index of the sn (neighboor)
+		if(auto sh_b = it_blocks.second.lock()){
+			shared_ptr<map<string, weak_ptr<Ded_Block>>> t_blocks = sh_b->GetMyNeighboors();					// Retrive it's neighboors
+			for (auto it_n_neigh : *t_blocks) {										// For each neighboor...
+				if(auto sh_n = it_n_neigh.second.lock()){
+					i = t_sns[sh_n->GetSN()];			// Retrieve index of the sn (neighboor)
 
-			//	for blocks that are not already included in the solution
-			if (g_blocks.find(i) == g_blocks.end()) {
-				g_solution.at(i) = true;			//	Mark the block as migrating
-				g_blocks[i] = it_n_neigh.second;	// Update chromosome's map to include this neighboor
-				g_solSize += g_blocks[i]->GetSize();			// Update chromosome's current size 
+					//	for blocks that are not already included in the solution
+					if (g_blocks->find(i) == g_blocks->end()) {
+						g_solution->at(i) = true;			//	Mark the block as migrating
+						(*g_blocks)[i] = it_n_neigh.second;	// Update chromosome's map to include this neighboor
+						g_solSize += (sh_n->GetSize());			// Update chromosome's current size 
+					}
+				}
 			}
 		}
 	}
 }
-*/

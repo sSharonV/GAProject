@@ -4,7 +4,7 @@
 
 using namespace std;
 
-Ded_File::Ded_File(unsigned int sn, string id, unsigned int dir_sn, int num_blocks)
+Ded_File::Ded_File(unsigned int sn, string id, unsigned int dir_sn, unsigned long num_blocks)
 	: f_sn(sn), f_id(id), f_dir_sn(dir_sn), f_num_blocks(num_blocks)
 {
 	using t_files = map<string, weak_ptr<Ded_Block>>;
@@ -38,12 +38,17 @@ string Ded_File::GetSN()
 /*
 	Returns the reference of the file's blocks (which is shared_ptr)
 */
-map<string, weak_ptr<Ded_Block>> Ded_File::GetMyBlocks()
+shared_ptr<map<string, weak_ptr<Ded_Block>>> Ded_File::GetMyBlocks()
 {
-	return (*f_blocks);
+	return f_blocks;
 }
 
 void Ded_File::UpdateBlockSN(shared_ptr<Ded_Block> &block)
 {
 	(*f_blocks)[block->GetSN()] = block;
+}
+
+unsigned long Ded_File::GetNumBlocks()
+{
+	return f_num_blocks;
 }

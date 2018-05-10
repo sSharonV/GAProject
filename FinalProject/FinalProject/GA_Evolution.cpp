@@ -1,25 +1,27 @@
 #include "GA_Evolution.h"
-/*
+
 GA_Evolution::GA_Evolution()
 {
-	GA_Migration* mig_ptr = new GA_Migration();
-	mig_ptr = GA_Migration::GetCurInstance();
+	shared_ptr<GA_Migration> mig_ptr(GA_Migration::GetCurInstance());
 	unsigned long i = 0;
 
 	// Initialize mapping from indexes to block_sn
-	for (auto it : mig_ptr->GetBlocks()) {
-		indexes_to_keys[i] = it.second.GetSN();
+	for (auto it : *(mig_ptr->GetBlocks())) {
+		indexes_to_keys[i] = it.second->GetSN();
 		i++;
+	}
+
+	// Initialize mapping from block_sn to indexes
+	for (auto it : indexes_to_keys) {
+		keys_to_indexes[it.second] = it.first;
 	}
 }
 
-GA_Evolution* GA_Evolution::GetCurInstance()
+shared_ptr<GA_Evolution> GA_Evolution::GetCurInstance()
 {
-	static GA_Evolution *m_evoInstance;
-	if (!m_evoInstance) {
-		m_evoInstance = new GA_Evolution();
-	}
-	return m_evoInstance;
+	static shared_ptr<GA_Evolution> m_evoInstance;
+	if (!m_evoInstance) m_evoInstance = make_shared<GA_Evolution>(GA_Evolution());
+	return	m_evoInstance;
 }
 
 map<unsigned long, string> GA_Evolution::GetInToKe()
@@ -34,31 +36,21 @@ map<string, unsigned long> GA_Evolution::GetKeToIn()
 
 void GA_Evolution::InitEvolution()
 {
-	
-	//m_popu = new GA_Population(10);
+	// Retrieve population size which was supllied by the GUI
+	shared_ptr<GA_Migration> mig_ptr(GA_Migration::GetCurInstance());
+	int pop_size = mig_ptr->GetProperties()->g_population_size;
 
-	
-	
-	// Initialize mapping from block_sn to indexes
-	for (auto it : indexes_to_keys) {
-		keys_to_indexes[it.second] = it.first;
-	}
-	printf("Hey");
+	// Initialize shared_ptr to handle the population
+	m_popu = make_shared<GA_Population>(GA_Population(pop_size));
 }
 
-
+/*
 	StartEvolution() takes care of generating initial population
 	-	Consists of chromosomes which generates by a random attachment of blocks to a chromosome,
 		up to a given size by the user
-
+*/
 void GA_Evolution::StartEvolution()
 {
-	//m_popu->Initialize();
-
+	m_popu->Initialize();
 }
 
-GA_Evolution * GetCurEvoInstance()
-{
-	return nullptr;
-}
-*/

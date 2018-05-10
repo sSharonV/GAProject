@@ -14,6 +14,7 @@ class Ded_Block {
 	int num_shared_files;
 	unsigned long size;
 	shared_ptr<map<string, weak_ptr<Ded_File>>> b_files;
+	shared_ptr<map<string, weak_ptr<Ded_Block>>> neighboors;
 
 public:
 	Ded_Block(unsigned long sn = 0, string id = "", int n_s_f = 0, unsigned long s = 0);
@@ -23,5 +24,5 @@ public:
 	void AddFile(shared_ptr<Ded_File> &f);
 	string GetSN();
 	unsigned long GetSize();
-	//map<string, Ded_Block*> GetMyNeighboors();
+	shared_ptr<map<string, weak_ptr<Ded_Block>>> GetMyNeighboors();
 };

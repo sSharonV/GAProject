@@ -26,7 +26,6 @@ GA_Migration::GA_Migration(const GA_Migration & other)
 	m_blocks = other.GetBlocks();
 }*/
 
-
 void GA_Migration::InitBipartiteGraph(ifstream &input)
 {
 	using t_blocks = map<string, string>;
@@ -38,26 +37,6 @@ void GA_Migration::InitBipartiteGraph(ifstream &input)
 	InitFileVector(input, blocks_size, files_blocks);
 	InitBlockVector(input);
 	ConnectBlockAndFiles(blocks_size, files_blocks);
-}
-
-void GA_Migration::SetGeneralProperties(general_prop &properties)
-{
-	(mig_props)->g_sel_mode = properties.g_sel_mode;
-	(mig_props)->g_cros_mode = properties.g_cros_mode;
-	(mig_props)->g_mut_mode = properties.g_mut_mode;
-	(mig_props)->g_population_size = properties.g_population_size;
-	(mig_props)->g_over_percent = properties.g_over_percent;
-	(mig_props)->g_generations = properties.g_generations;
-	(mig_props)->g_elit_best = properties.g_elit_best;
-	(mig_props)->g_start_fix = properties.g_start_fix;
-	(mig_props)->g_epsilon = properties.g_epsilon;
-	(mig_props)->g_eps_size = properties.g_eps_size;
-	(mig_props)->trueFor_KB = properties.trueFor_KB;
-	if ((mig_props)->trueFor_KB) {
-		(mig_props)->g_kb = properties.g_kb;
-		(mig_props)->g_kb_size = properties.g_kb_size;
-	}
-	else (mig_props)->g_percent = properties.g_percent;
 }
 
 long double GA_Migration::GetSolutionLimitSize()
@@ -82,7 +61,6 @@ unsigned long GA_Migration::GetMinBlockSize()
 	return m_min_block_size.second;
 }
 
-
 shared_ptr<map<string, shared_ptr<Ded_Block>>> GA_Migration::GetBlocks()
 {
 	return m_blocks;
@@ -93,9 +71,9 @@ shared_ptr<map<string, shared_ptr<Ded_File>>> GA_Migration::GetFiles()
 	return m_files;
 }
 
-general_prop GA_Migration::GetProperties()
+shared_ptr<general_prop> GA_Migration::GetProperties()
 {
-	return *mig_props;
+	return mig_props;
 }
 
 shared_ptr<GA_Migration> GA_Migration::GetCurInstance()
@@ -105,13 +83,11 @@ shared_ptr<GA_Migration> GA_Migration::GetCurInstance()
 	return	m_migInstance;
 }
 
-
 /*
 SafeExit() clears the maps of blocks and files.
 -	deletes the pointer to GA_Migration reference
--	shared_ptr
+-	shared_ptr getting initialized newly
 */
-
 void GA_Migration::SafeExit()
 {
 	using t_blocks = map<string, shared_ptr<Ded_Block>>;
@@ -175,98 +151,94 @@ void GA_Migration::InitKBForMig()
 void GA_Migration::InitBlockVector(ifstream& input)
 {
 	string line;
-	string block_sn, block_id, num_files;
+	string block_sn, 
+		   block_id, 
+		   num_files;
 	string file_sn;
-	int n_files;
-	unsigned long length = 0, last_length = 0;
-	bool main_flag = true, flag = false;
+	vector<string> b_props;
+	unsigned long n_files, n_blocks;
+	unsigned long i;
+	bool main_flag = true, first = true;
 
 	// guerantee pointing to start of input file
 	input.clear();
 	input.seekg(0, ios::beg);
-	// start processing the blocks within the textf=file
+	// start processing the blocks within the CSV-file
 	while (main_flag) {
-		getline(input, line);
-		if (line.find("B,") == string::npos) {		 // save the position of the files
-			last_length = length;					// position of start of line
-			length = (unsigned long)(input.tellg());					// position of end of line
+		i = 1;
+		if (first) {
+			b_props = InputHelper(input, "B,", n_blocks);
+			first = false;
 		}
-		else {
-			//input.seekg(last_length);
-			input.seekg(180694); //180694[ths=0.1], 451660[ths=1]	// TODO: find the right combination to start from.
-			length = (unsigned long)(input.tellg());
-			flag = true;
-			while (IsFirstChar(input, 'B') && flag) {	 // start processing the files
-				//input.seekg(length - 91 + 2);			 
-				input.seekg(length+2);
-				block_sn = InputHelper(input);
-				block_id = InputHelper(input);
-				num_files = InputHelper(input);
-				n_files = stoi(num_files);
-
-				shared_ptr<Ded_Block> temp(make_shared<Ded_Block>(Ded_Block(stoi(block_sn), block_id, n_files)));
+		if (!first){
+		// Next time it's get empty will be when we done processing blocks
+			if(!b_props.empty()){
+				block_sn = b_props.at(i++);
+				block_id = b_props.at(i++);
+				num_files = b_props.at(i++);
+				n_files = stoul(num_files);
+				shared_ptr<Ded_Block> temp(make_shared<Ded_Block>(Ded_Block(stoul(block_sn), block_id, n_files)));
 				(*m_blocks)[block_sn] = temp;
-				for (int i = 0; i < n_files; i++) {
-					file_sn = InputHelper(input);
+				for (unsigned long j = 0; j < n_files; j++) {
+					file_sn = b_props.at(i++);
 					(*m_blocks)[block_sn]->AddFile((*m_files)[file_sn]);
 				}
-				length = (unsigned long)(input.tellg());
-				length++;
+				if (m_blocks->size() != n_blocks)
+					b_props = InputHelper(input, "B,", n_blocks);
+				else b_props.clear();
 			}
+			else main_flag = false;
 		}
-		if (flag) main_flag = false;
 	}
 }
 
 void GA_Migration::InitFileVector(ifstream & input, shared_ptr<map<string, string>> blocks, shared_ptr<map<string, vector<string>>> f_b) {
 	string line;
 	string file_sn,
-		   file_id, 
-		   dir_sn,
-		   num_blocks;
+		file_id,
+		dir_sn,
+		num_blocks;
 	string block_sn,
-		   block_size;
-	bool main_flag = true, flag = true;
-	int n_blocks;
-	unsigned long length;
+		block_size;
+	vector<string> f_props;
+	bool main_flag = true, first = true;
+	unsigned long n_blocks;
+	unsigned long n_files;
+	unsigned long i;
 
 	// guerantee pointing to start of input file
 	input.clear();
 	input.seekg(0, ios::beg);
-	// start processing the blocks within the textf=file
+	// start processing the blocks within the CSV-file
 	while (main_flag) {
-		getline(input, line);
-		if ((line).find("F,") == string::npos)		 // save the position of the files
-			length = (unsigned long)(input.tellg());
-		else {
-			while (IsFirstChar(input, 'F') || flag) {	 // start processing the files
-				if (flag) {
-					input.seekg(length - 8);					// start at the beggining of the file sequence
-					length = (unsigned long)(input.tellg());
-					flag = false;
-				}
-				else {
-					length = (unsigned long)(input.tellg());
-					input.seekg(length + 3);
-				}
-				file_sn = InputHelper(input);
-				file_id = InputHelper(input);
-				dir_sn = InputHelper(input);
-				num_blocks = InputHelper(input);
+		i = 1;
+		if (first) {
+			f_props = InputHelper(input, "F,", n_files);
+			first = false;
+		}
+		if (!first) {
+			// Next time it's get empty will be when we done processing files
+			if (!f_props.empty()) {
+				file_sn = f_props.at(i++);
+				file_id = f_props.at(i++);
+				dir_sn = f_props.at(i++);
+				num_blocks = f_props.at(i++);
 				n_blocks = stoul(num_blocks);
 				shared_ptr<Ded_File> temp(make_shared<Ded_File>(Ded_File(stoul(file_sn), file_id, stoul(dir_sn), n_blocks)));
-				//string fsn = file_sn;
 				(*m_files)[file_sn] = temp;
-				for (int i = 0; i < n_blocks; i++) {
-					block_sn = InputHelper(input);
-					block_size = InputHelper(input);
+				for (unsigned long j = 0; j < n_blocks; j++) {
+					block_sn = f_props.at(i++);
+					block_size = f_props.at(i++);
 					// Update helper hash-maps to later connect the bipartite-graph
 					(*blocks)[block_sn] = block_size;
 					(*f_b)[file_sn].push_back(block_sn);
 				}
+				if(m_files->size() != n_files)
+					f_props = InputHelper(input, "F,", n_files);
+				else f_props.clear();
 			}
+			else main_flag = false;
 		}
-		if (!flag) main_flag = false;
 	}
 }
 
@@ -297,37 +269,36 @@ void GA_Migration::ConnectBlockAndFiles(shared_ptr<map<string, string>> block_si
 	}
 }
 
-bool GA_Migration::IsFirstChar(ifstream & in, char ch)
-{
-	char c;
-	unsigned long cur_pos = (unsigned long)(in.tellg());
-	in >> c;
-	in.seekg(cur_pos);
-	if (c == ch) return true;
-	else return false;
-}
+/*
+	Takes care of processing input
+	-	return vector with strings - which are splits of inputted line
+	-	initialize the number of blocks\files that are going to be processed
+*/
+vector<string> GA_Migration::InputHelper(ifstream &in, string to_search, unsigned long& num) {
+	vector<string> result;
+	string line; getline(in, line);
+	stringstream lineStream(line);
+	string cell;
 
-string GA_Migration::InputHelper(ifstream &in)
-{
-	char ch;
-	string word;
-	while (in >> ch) {
-		if (ch == ',')
-			return word;
-		else
-			word.append(1, ch);
-	}
-	return NULL;
+	while (line.find(to_search) == string::npos) { 
+		getline(in, line);
+		if (line.find("Num files:") != string::npos && (to_search.compare("F,") == 0))
+			num = stoul(line.substr(line.find(":") + 1));
+		else if(line.find("Num blocks:") != string::npos && (to_search.compare("B,") == 0))
+			num = stoul(line.substr(line.find(":") + 1));
+	}	// Skip strings in start of file and update the reference of of 'num'
+	lineStream.str(line);
+	while (getline(lineStream, cell, ','))
+		result.push_back(cell);
+	return result;
 }
 
 void GA_Migration::RunGeneticAlgo()
 {
 	InitKBForMig();
-	/*
 	shared_ptr<GA_Evolution> ga_evo(GA_Evolution::GetCurInstance());
 	ga_evo->InitEvolution();
 	ga_evo->StartEvolution();
-	*/
 }
 
 
