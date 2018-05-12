@@ -1,6 +1,6 @@
 #include "GA_Chromosome.h"
 
-GA_Chromosome::GA_Chromosome(unsigned long num_blocks, long double limit) : g_solLimit(limit)
+GA_Chromosome::GA_Chromosome(unsigned long num_blocks, long double limit, int id) : g_solLimit(limit), g_id(id)
 {
 	using t_blocks = map<unsigned long, weak_ptr<Ded_Block>>;
 	using il_blocks = initializer_list<t_blocks::value_type>;
@@ -9,13 +9,29 @@ GA_Chromosome::GA_Chromosome(unsigned long num_blocks, long double limit) : g_so
 	g_solSize = 0;
 }
 
+GA_Chromosome::GA_Chromosome(const GA_Chromosome & other)
+{
+	this->g_solSize = other.g_solSize;
+	this->g_solLimit = other.g_solLimit;
+	this->g_blocks = other.g_blocks;
+	this->g_solution = other.g_solution;
+	this->g_id = other.g_id;
+}
+
 GA_Chromosome::~GA_Chromosome()
 {
 }
 
-long double GA_Chromosome::getSizeInBytes()
+/*
+bool GA_Chromosome::operator<(GA_Chromosome& const other) const
 {
-	return g_solSize;
+	return (ObjectiveFunc() < other.ObjectiveFunc()) ? true : false ;
+}*/
+
+long double GA_Chromosome::ObjectiveFunc() const
+{
+	return ((g_solSize-g_solLimit) > 0) ? (g_solSize - g_solLimit)
+										: 0.0;
 }
 
 void GA_Chromosome::setSizeInBytes(long double s)
@@ -43,13 +59,14 @@ void GA_Chromosome::InitSolution()
 	map<string, unsigned long> t_sns = evo_ptr->GetKeToIn();
 
 	chrono::duration<double> elapsed;
-	const int interval = 60;
+	const int interval = 5;
 	unsigned long curr_size = 0;
 	bool stop_attach = false;
 
 	// Random protocol
 	unsigned long i_rand;
 	srand(time(NULL));
+
 	auto start = chrono::high_resolution_clock::now();
 
 	/*	Testing specific blocks...

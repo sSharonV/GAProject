@@ -1,15 +1,15 @@
 #pragma once
-#include <cstdlib>
-#include <crtdbg.h>
 #include "Ded_File.h"
 #include "GA_Evolution.h"
+#include <cstdlib>
+#include <crtdbg.h>
 #include <math.h>
 #include <fstream>
 #include <iostream>
 #include <map>
 #include <string>
 #include <sstream>
-#include <memory>
+#include <memory> // !MIGRATION_H
 
 using namespace std;
 
@@ -19,18 +19,6 @@ enum class Mutation { sin_point_mut, uni_point_mut };
 enum class BytesMeasure {kilo, mega, giga};
 
 class GA_Evolution;
-
-/*
-struct file_fprop {
-	string f_sn;
-	string f_id;
-	string f_dirsn;
-	string f_numb;
-};
-struct file_bprop {
-	string b_sn;
-	string b_size;
-};*/
 
 struct general_prop{
 	Selection g_sel_mode;

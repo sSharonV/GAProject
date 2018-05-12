@@ -34,6 +34,11 @@ map<string, unsigned long> GA_Evolution::GetKeToIn()
 	return keys_to_indexes;
 }
 
+shared_ptr<GA_Population> GA_Evolution::GetCurPopulation()
+{
+	return m_popu;
+}
+
 void GA_Evolution::InitEvolution()
 {
 	// Retrieve population size which was supllied by the GUI
@@ -52,5 +57,8 @@ void GA_Evolution::InitEvolution()
 void GA_Evolution::StartEvolution()
 {
 	m_popu->Initialize();
+	GA_SelectionRW selection(Selection::rou_whe_sel, 2);
+	selection.InitMatingPool(m_popu);
+	printf("Hey");
 }
 

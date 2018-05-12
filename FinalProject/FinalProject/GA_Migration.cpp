@@ -14,7 +14,6 @@ GA_Migration::GA_Migration(){
 	m_files = make_shared<t_files>(il_files{});
 }
 
-
 /*GA_Migration::~GA_Migration()
 {
 	//delete m_migInstance;

@@ -137,6 +137,9 @@
     <ClCompile Include="FinalProject.cpp">
       <Filter>Source Files\Migration</Filter>
     </ClCompile>
+    <ClCompile Include="GA_SelectionRW.cpp">
+      <Filter>Source Files\Selection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="FinalProject.rc">

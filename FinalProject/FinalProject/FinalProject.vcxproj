@@ -214,6 +214,7 @@
     <ClCompile Include="GA_Migration.cpp" />
     <ClCompile Include="GA_Population.cpp" />
     <ClCompile Include="GA_Selection.cpp" />
+    <ClCompile Include="GA_SelectionRW.cpp" />
     <ClCompile Include="GA_SelectionTS.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
