@@ -23,6 +23,9 @@ public:
 	~GA_Chromosome();
 	long double ObjectiveFunc() const;
 	void InitSolution();
+	void AttachMyBlocks();
+	bool CheckIndex(unsigned long index);
+	void SetIndex(unsigned long index, bool val);
 private:
 	void setSizeInBytes(long double s);
 };

@@ -1,10 +1,8 @@
-#ifndef DEDBLOCK_H
 #pragma once
 #include "Ded_File.h"
 #include <memory>
 #include <map>
 #include <string>
-#endif // !DEDBLOCK_H
 
 using namespace std;
 

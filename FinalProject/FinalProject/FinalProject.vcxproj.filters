@@ -13,15 +13,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\Selection">
-      <UniqueIdentifier>{7edd3450-f149-4949-ac79-da87f4f3401d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Crossover">
-      <UniqueIdentifier>{8b653d21-f8f0-47bb-91c5-9aea8c16ffea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Mutation">
-      <UniqueIdentifier>{9306998d-2a6a-4260-a15f-9946d3f8e584}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Ded_Elements">
       <UniqueIdentifier>{e50a927a-1dfb-4f28-b9ca-b3bd43886b3a}</UniqueIdentifier>
     </Filter>
@@ -49,31 +40,16 @@
     <Filter Include="Source Files\Selection">
       <UniqueIdentifier>{adb8f1fb-02e0-459a-a7bd-98daca82137f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Evolution_Operations">
+      <UniqueIdentifier>{7edd3450-f149-4949-ac79-da87f4f3401d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GA_Selection.h">
-      <Filter>Header Files\Selection</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_SelectionRW.h">
-      <Filter>Header Files\Selection</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_SelectionLRB.h">
-      <Filter>Header Files\Selection</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_SelectionTS.h">
-      <Filter>Header Files\Selection</Filter>
-    </ClInclude>
     <ClInclude Include="Ded_Block.h">
       <Filter>Header Files\Ded_Elements</Filter>
     </ClInclude>
     <ClInclude Include="Ded_File.h">
       <Filter>Header Files\Ded_Elements</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_Crossover.h">
-      <Filter>Header Files\Crossover</Filter>
-    </ClInclude>
-    <ClInclude Include="GA_Mutation.h">
-      <Filter>Header Files\Mutation</Filter>
     </ClInclude>
     <ClInclude Include="GA_Chromosome.h">
       <Filter>Header Files\Evolution</Filter>
@@ -101,6 +77,15 @@
     </ClInclude>
     <ClInclude Include="FinalProject.h">
       <Filter>Header Files\Migration</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Selection.h">
+      <Filter>Header Files\Evolution_Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Crossover.h">
+      <Filter>Header Files\Evolution_Operations</Filter>
+    </ClInclude>
+    <ClInclude Include="GA_Mutation.h">
+      <Filter>Header Files\Evolution_Operations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -139,6 +124,24 @@
     </ClCompile>
     <ClCompile Include="GA_SelectionRW.cpp">
       <Filter>Source Files\Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_SelectionLRB.cpp">
+      <Filter>Source Files\Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_Crossover.cpp">
+      <Filter>Source Files\Crossover</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_CrossoverOP.cpp">
+      <Filter>Source Files\Crossover</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_CrossoverTP.cpp">
+      <Filter>Source Files\Crossover</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_CrossoverU.cpp">
+      <Filter>Source Files\Crossover</Filter>
+    </ClCompile>
+    <ClCompile Include="GA_Mutation.cpp">
+      <Filter>Source Files\Mutation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -57,8 +57,14 @@ void GA_Evolution::InitEvolution()
 void GA_Evolution::StartEvolution()
 {
 	m_popu->Initialize();
-	GA_SelectionRW selection(Selection::rou_whe_sel, 2);
+	GA_SelectionTS selection(Selection::lin_rank_sel, 2);
 	selection.InitMatingPool(m_popu);
+	shared_ptr<GA_Population> currPool = make_shared<GA_Population>(GA_Population());
+	currPool = selection.GetCurrentPool();
+	GA_CrossoverU crossover(currPool, Crossover::one_point_cro);
+	crossover.GenerateOffprings();
+	GA_Mutation mutation(Mutation::uni_point_mut, crossover.GetNewGeneration(), 100);
+	mutation.PerformMutation();
 	printf("Hey");
 }
 

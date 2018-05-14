@@ -1,4 +1,5 @@
 #include "GA_Chromosome.h"
+#include <iterator>
 
 GA_Chromosome::GA_Chromosome(unsigned long num_blocks, long double limit, int id) : g_solLimit(limit), g_id(id)
 {
@@ -60,7 +61,7 @@ void GA_Chromosome::InitSolution()
 
 	chrono::duration<double> elapsed;
 	const int interval = 5;
-	unsigned long curr_size = 0;
+	long double curr_size = 0;
 	bool stop_attach = false;
 
 	// Random protocol
@@ -78,12 +79,6 @@ void GA_Chromosome::InitSolution()
 		// Get random block
 		i_rand = rand() % t_blocks->size();
 		string b_key = t_indexes[i_rand];
-		/*	Testing specific blocks...
-		if (test) {
-			test = false;
-			b_key = "2";
-		}
-		*/
 		shared_ptr<Ded_Block> tb;
 		tb = t_blocks->find(b_key)->second;
 
@@ -132,4 +127,43 @@ void GA_Chromosome::InitSolution()
 			}
 		}
 	}
+}
+
+/*
+	Takes care of updating g_blocks for an modified chromosome
+	-	Being used by GA_Crossover, after generating new offspring
+*/
+void GA_Chromosome::AttachMyBlocks()
+{
+	// pointer to GA_Migration/GA_Evolution - for pulling information
+	shared_ptr<GA_Migration> mig_ptr(GA_Migration::GetCurInstance());
+	shared_ptr<GA_Evolution> evo_ptr(GA_Evolution::GetCurInstance());
+
+	// Reference to bipartite-graph
+	shared_ptr<map<string, shared_ptr<Ded_Block>>> t_blocks = mig_ptr->GetBlocks();
+	shared_ptr<map<string, shared_ptr<Ded_File>>> t_files = mig_ptr->GetFiles();
+
+	// Copy map of indexes to block_sn
+	map<unsigned long, string> t_indexes = evo_ptr->GetInToKe();
+	map<string, unsigned long> t_sns = evo_ptr->GetKeToIn();
+
+	// Iterate the boolean vector for migrating blocks
+	for (auto it_bool : *g_solution) {
+		if (it_bool) {	// block we need to assign to the chromosome's vector
+			unsigned long it_index = it_bool - *g_solution->begin();		//	Calculates index
+			string it_key = t_indexes[it_index];							//	Retrieve key of the current index
+			(*g_blocks)[it_index] = (t_blocks->find(it_key))->second;		//	Retrieve the reference of a block
+			g_solSize += (t_blocks->find(it_key))->second->GetSize();		//	Updating the size of this solution
+		}
+	}
+}
+
+bool GA_Chromosome::CheckIndex(unsigned long index)
+{
+	return g_solution->at(index);
+}
+
+void GA_Chromosome::SetIndex(unsigned long index, bool val)
+{
+	g_solution->at(index) = val;
 }

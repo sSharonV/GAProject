@@ -197,9 +197,6 @@
     <ClInclude Include="GA_Mutation.h" />
     <ClInclude Include="GA_Population.h" />
     <ClInclude Include="GA_Selection.h" />
-    <ClInclude Include="GA_SelectionLRB.h" />
-    <ClInclude Include="GA_SelectionRW.h" />
-    <ClInclude Include="GA_SelectionTS.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -210,10 +207,16 @@
     <ClCompile Include="FinalProject.cpp" />
     <ClCompile Include="FinalProjectDlg.cpp" />
     <ClCompile Include="GA_Chromosome.cpp" />
+    <ClCompile Include="GA_Crossover.cpp" />
+    <ClCompile Include="GA_CrossoverOP.cpp" />
+    <ClCompile Include="GA_CrossoverTP.cpp" />
+    <ClCompile Include="GA_CrossoverU.cpp" />
     <ClCompile Include="GA_Evolution.cpp" />
     <ClCompile Include="GA_Migration.cpp" />
+    <ClCompile Include="GA_Mutation.cpp" />
     <ClCompile Include="GA_Population.cpp" />
     <ClCompile Include="GA_Selection.cpp" />
+    <ClCompile Include="GA_SelectionLRB.cpp" />
     <ClCompile Include="GA_SelectionRW.cpp" />
     <ClCompile Include="GA_SelectionTS.cpp" />
     <ClCompile Include="stdafx.cpp">

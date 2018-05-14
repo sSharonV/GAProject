@@ -1,22 +1,17 @@
 #pragma once
-#ifndef MIGRATION_H
 #include "GA_Migration.h"
-#endif
-#ifndef POPULATION_H
 #include "GA_Population.h"
-#endif
-#ifndef SELECTION_H
 #include "GA_Selection.h"
-#endif
-#ifndef SELECTIONRW_H
-#include "GA_SelectionRW.h"
-#endif
+#include "GA_Crossover.h"
+#include "GA_Mutation.h"
 
 using namespace std;
 
 class GA_Population;
 class GA_Migration;
 class GA_Selection;
+class GA_Crossover;
+class GA_Mutation;
 //class GA_SelectionRW;
 
 class GA_Evolution {

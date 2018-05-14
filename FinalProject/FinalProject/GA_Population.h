@@ -1,8 +1,6 @@
 #pragma once
 #include "GA_Evolution.h" 
-#ifndef CHROMOSOME_H
 #include "GA_Chromosome.h"
-#endif // !CHROMOSOME_H
 
 using namespace std;
 
