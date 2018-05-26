@@ -8,13 +8,13 @@ void GA_SelectionLRB::SelectImplement(shared_ptr<GA_Population> sh_p)
 {
 	long int sum_rank;
 	long double ch_percent;
+	shared_ptr<GA_Evolution> ga_evo(GA_Evolution::GetCurInstance());
 	vector< shared_ptr<GA_Chromosome>> t_chrom;
 	// Initialize a copy of current population
 	t_chrom = *(sh_p->GetChromosomes());
 
 	//	Initializing the pointer for new population to return
 	m_N = sh_p->GetPopSize();
-	s_matingPool = make_shared<GA_Population>(GA_Population(m_N));
 
 	// Initializing sum of ranks
 	sum_rank = 0;
@@ -36,15 +36,15 @@ void GA_SelectionLRB::SelectImplement(shared_ptr<GA_Population> sh_p)
 	});
 
 	// Start attaching chromosomes to the mating pool
-	while (s_matingPool->GetChromosomes()->size() != m_N) {	// Untill the mating pool is full with selected chromosomes
+	while (ga_evo->GetMatingPool()->GetChromosomes()->size() != m_N) {	// Untill the mating pool is full with selected chromosomes
 		int i = m_N;
 		for (auto it_chr = t_chrom.begin(); it_chr != t_chrom.end(); it_chr++) {
 			p_rand = rand() % sum_rank + 1;						// Range [1,sum_rank]
 			ch_percent = (long double)((CalcExpVal(i) / m_N) * (100.0));
 			i--;
 			if (p_rand < ch_percent)
-				s_matingPool->InitBySelect(*it_chr);
-			if (s_matingPool->GetChromosomes()->size() == m_N)
+				ga_evo->GetMatingPool()->InitBySelect(*it_chr);
+			if (ga_evo->GetMatingPool()->GetChromosomes()->size() == m_N)
 				break;
 		}
 	}

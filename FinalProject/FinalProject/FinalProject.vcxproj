@@ -186,6 +186,7 @@
     </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CResultDlg.h" />
     <ClInclude Include="Ded_Block.h" />
     <ClInclude Include="Ded_File.h" />
     <ClInclude Include="FinalProject.h" />
@@ -202,6 +203,7 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CResultDlg.cpp" />
     <ClCompile Include="Ded_Block.cpp" />
     <ClCompile Include="Ded_File.cpp" />
     <ClCompile Include="FinalProject.cpp" />

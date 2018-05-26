@@ -20,18 +20,31 @@ enum class Selection;
 */
 class GA_Selection {
 protected:
+	/*
+		Selection model
+	*/
 	Selection s_sel_mode;
+
+	/*
+		Number of saved chromosomes (Elitism)
+	*/
 	int s_elit;
-	weak_ptr<GA_Population> s_popul;
-	shared_ptr<GA_Population> s_matingPool;
 public:
 	GA_Selection(Selection sel, int elit);
 	~GA_Selection();
+	
+	/*
+		Initializing the mating pool from GA_Evolution and executing the specific selection implemention
+	*/
+	void InitMatingPool(shared_ptr<GA_Population> population);
 	// virtual saved-word is for commanding the compiler to use the definition of the derived class
-	virtual void InitMatingPool(shared_ptr<GA_Population> population);
 	virtual void SelectImplement(shared_ptr<GA_Population> sh_p) = 0;
-	shared_ptr<GA_Population> GetCurrentPool();
 protected:
+
+	/*
+		Takes care of initializing the mating pool with the best fitted chromosomes of the current population
+		-	Up to 's_elit' num of chromosomes
+	*/
 	void InitElitism();
 };
 
@@ -45,7 +58,6 @@ class GA_SelectionRW : public GA_Selection {
 	long double m_totalFit;
 public:
 	GA_SelectionRW(Selection sel, int elit);
-	//virtual void InitMatingPool(shared_ptr<GA_Population> population);
 	virtual void SelectImplement(shared_ptr<GA_Population> sh_p);
 private:
 	/*
@@ -53,7 +65,6 @@ private:
 		-	The more lower fitness value, the higher chance to be selected
 	*/
 	double CalcPercent(long double cardinal);
-	
 };
 
 /*
@@ -68,9 +79,11 @@ class GA_SelectionLRB : public GA_Selection {
 	int m_N;
 public:
 	GA_SelectionLRB(Selection sel, int elit, long double max = 2.0);
-	//virtual void InitMatingPool(shared_ptr<GA_Population> population);
 	virtual void SelectImplement(shared_ptr<GA_Population> sh_p);
 private:
+	/*
+		Calculate the expected value of a given chromosome according to linear-rank
+	*/
 	long double CalcExpVal(long double p_rank);
 };
 
@@ -83,8 +96,10 @@ class GA_SelectionTS : public GA_Selection {
 	int m_k_competitors;
 public:
 	GA_SelectionTS(Selection sel, int elit, int num_comp = 5);
-	//virtual void InitMatingPool(shared_ptr<GA_Population> population);
 	virtual void SelectImplement(shared_ptr<GA_Population> sh_p);
 private:
+	/*
+		Returns the winner of a given chromosomes
+	*/
 	void PerformTournament(vector<shared_ptr<GA_Chromosome>> competitors);
 };

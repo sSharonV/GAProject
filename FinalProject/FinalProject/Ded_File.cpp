@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "Ded_File.h"
 
-
 using namespace std;
 
 Ded_File::Ded_File(unsigned int sn, string id, unsigned int dir_sn, unsigned long num_blocks)
@@ -35,9 +34,6 @@ string Ded_File::GetSN()
 	return to_string(f_sn);
 }
 
-/*
-	Returns the reference of the file's blocks (which is shared_ptr)
-*/
 shared_ptr<map<string, weak_ptr<Ded_Block>>> Ded_File::GetMyBlocks()
 {
 	return f_blocks;

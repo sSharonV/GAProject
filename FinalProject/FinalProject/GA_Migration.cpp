@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "GA_Migration.h"
 
-//shared_ptr<GA_Migration> GA_Migration::m_migInstance = make_shared<GA_Migration>(GA_Migration());
-
 GA_Migration::GA_Migration(){
 
 	mig_props = make_shared<general_prop>();
@@ -60,6 +58,101 @@ unsigned long GA_Migration::GetMinBlockSize()
 	return m_min_block_size.second;
 }
 
+string GA_Migration::SelectionString()
+{
+	switch (mig_props->g_sel_mode)
+	{
+	case Selection::rou_whe_sel: {
+		return string("Roulette-Wheel Selection");
+		break;
+	}
+	case Selection::lin_rank_sel: {
+		return string("Linear-Rank based Selection");
+		break;
+	}
+	case Selection::tour_sel: {
+		return string("Tournament Selection");
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+string GA_Migration::CrossoverString()
+{
+	switch (mig_props->g_cros_mode)
+	{
+	case Crossover::one_point_cro: {
+		return string("One-Point crossover");
+		break;
+	}
+	case Crossover::two_point_cro: {
+		return string("Two-Point crossover");
+		break;
+	}
+	case Crossover::uni_cro: {
+		return string("Uniform crossover");
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+string GA_Migration::MutationString()
+{
+	switch (mig_props->g_mut_mode)
+	{
+	case Mutation::sin_point_mut:{
+		return string("Single-Point mutation");
+		break;
+	}
+	case Mutation::uni_point_mut: {
+		return string("Uniform mutation");
+		break;
+	}
+	default:
+		break;
+	}
+}
+
+string GA_Migration::EpsByteString()
+{
+	switch (mig_props->g_eps_size)
+	{
+	case BytesMeasure::kilo: {
+		return string("KB");
+	}
+	case BytesMeasure::mega: {
+		return string("MB");
+	}
+	case BytesMeasure::giga: {
+		return string("GB");
+	}
+	default:
+		break;
+	}
+}
+
+string GA_Migration::SizeByteString()
+{
+	switch (mig_props->g_kb_size)
+	{
+	case BytesMeasure::kilo: {
+		return string("KB");
+	}
+	case BytesMeasure::mega: {
+		return string("MB");
+	}
+	case BytesMeasure::giga: {
+		return string("GB");
+	}
+	default:
+		break;
+	}
+}
+
 shared_ptr<map<string, shared_ptr<Ded_Block>>> GA_Migration::GetBlocks()
 {
 	return m_blocks;
@@ -82,6 +175,25 @@ shared_ptr<GA_Migration> GA_Migration::GetCurInstance()
 	return	m_migInstance;
 }
 
+void GA_Migration::SetFileName(string s)
+{
+	m_fileName = s;
+}
+
+string GA_Migration::GetFileName()
+{
+	return m_fileName;
+}
+
+string GA_Migration::GetNumberOfFiles()
+{
+	return to_string(m_files->size());
+}
+
+string GA_Migration::GetNumberOfBlocks() {
+	return to_string(m_blocks->size());
+}
+
 /*
 SafeExit() clears the maps of blocks and files.
 -	deletes the pointer to GA_Migration reference
@@ -100,7 +212,6 @@ void GA_Migration::SafeExit()
 
 void GA_Migration::InitKBForMig()
 {
-
 	// Updates the size properties according to its measurments
 	switch (mig_props->g_eps_size)
 	{
@@ -124,26 +235,32 @@ void GA_Migration::InitKBForMig()
 		switch (mig_props->g_kb_size)
 		{
 		case BytesMeasure::kilo: {
-			mig_props->g_kb = (mig_props->g_kb)*(1024);
+			mig_props->g_kb = (long double)(mig_props->g_kb)*(1024);
 			break;
 		}
 		case BytesMeasure::mega: {
-			mig_props->g_kb = (mig_props->g_kb)*(pow(1024, 2));
+			mig_props->g_kb = (long double)(mig_props->g_kb)*(pow(1024, 2));
 			break;
 		}
 		case BytesMeasure::giga: {
-			mig_props->g_kb = (mig_props->g_kb)*(pow(1024, 3));
+			mig_props->g_kb = (long double)(mig_props->g_kb)*(pow(1024, 3));
 			break;
 		}
 		default:
 			break;
 		}
-		mig_props->g_KBforMig = (mig_props->g_epsilon + mig_props->g_kb);
+		mig_props->g_KBforMig = (long double)(mig_props->g_epsilon + mig_props->g_kb);
 		mig_props->g_KBforMig *= ((100 + mig_props->g_over_percent) / 100);
+		if (mig_props->g_kb - mig_props->g_epsilon == 0) mig_props->g_KB_minimal = 0;
+		else
+			mig_props->g_KB_minimal = (long double)(mig_props->g_kb - mig_props->g_epsilon);
+		mig_props->g_KB_minimal *= ((100 - mig_props->g_over_percent) / 100);
 	}
 	else {
-		mig_props->g_KBforMig = mig_props->g_totalKB * ((mig_props->g_percent) / 100);
-		mig_props->g_KBforMig *= ((100 + mig_props->g_over_percent) / 100);
+		mig_props->g_KBforMig = (long double)mig_props->g_totalKB * ((mig_props->g_percent) / 100.0);
+		mig_props->g_KBforMig *= ((100 + mig_props->g_over_percent) / 100.0);
+		mig_props->g_KB_minimal = mig_props->g_KBforMig;
+		mig_props->g_KB_minimal *= ((100 - mig_props->g_over_percent) / 100.0);
 	}
 }
 
@@ -294,7 +411,7 @@ vector<string> GA_Migration::InputHelper(ifstream &in, string to_search, unsigne
 
 void GA_Migration::RunGeneticAlgo()
 {
-	InitKBForMig();
+	
 	shared_ptr<GA_Evolution> ga_evo(GA_Evolution::GetCurInstance());
 	ga_evo->InitEvolution();
 	ga_evo->StartEvolution();

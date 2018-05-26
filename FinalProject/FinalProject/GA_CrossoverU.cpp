@@ -1,13 +1,15 @@
 #include "GA_Crossover.h"
 
-GA_CrossoverU::GA_CrossoverU(shared_ptr<GA_Population> cur_pool, Crossover cros) : GA_Crossover(cur_pool, cros)
+GA_CrossoverU::GA_CrossoverU(Crossover cros) : GA_Crossover(cros)
 {
 }
 
 void GA_CrossoverU::CrossImplement(shared_ptr<GA_Population> sh_pop, unsigned long num_blocks, long double limit)
 {
-	unsigned long i = 0;
-	unsigned long j = 0;
+	unsigned long i;
+	unsigned long j;
+	shared_ptr<GA_Migration> mig_ptr(GA_Migration::GetCurInstance());
+	j = mig_ptr->GetProperties()->g_elit_best;
 	// Random protocol
 	unsigned long i_rand;
 	srand(time(NULL));
@@ -32,8 +34,6 @@ void GA_CrossoverU::CrossImplement(shared_ptr<GA_Population> sh_pop, unsigned lo
 			}
 			i++;
 		}
-		//offspring_1->AttachMyBlocks();
-		//offspring_2->AttachMyBlocks();
 		//	Adds the new children to the result population
 		s_newGeneration->push_back(offspring_1);
 		s_newGeneration->push_back(offspring_2);

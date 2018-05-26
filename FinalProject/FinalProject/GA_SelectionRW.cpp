@@ -7,6 +7,8 @@ GA_SelectionRW::GA_SelectionRW(Selection sel, int elit) : GA_Selection(sel,elit)
 void GA_SelectionRW::SelectImplement(shared_ptr<GA_Population> sh_p)
 {
 	int size;
+	shared_ptr<GA_Evolution> ga_evo(GA_Evolution::GetCurInstance());
+
 	auto sh_chr = sh_p->GetChromosomes();
 
 	//	Calculate current total fitness(updates @size)
@@ -16,7 +18,6 @@ void GA_SelectionRW::SelectImplement(shared_ptr<GA_Population> sh_p)
 
 	//	Initializing the pointer for new population to return
 	size = sh_p->GetPopSize();
-	s_matingPool = make_shared<GA_Population>(GA_Population(size));
 
 	//	Saves fixed number of best-fitted chromosomes from the current population
 	if (s_elit != 0) InitElitism();
@@ -26,12 +27,12 @@ void GA_SelectionRW::SelectImplement(shared_ptr<GA_Population> sh_p)
 	srand(time(NULL));
 
 	// Start attaching chromosomes to the mating pool
-	while (s_matingPool->GetChromosomes()->size() != size) {	// Untill the mating pool is full with selected chromosomes
+	while (ga_evo->GetMatingPool()->GetChromosomes()->size() != size) {	// Untill the mating pool is full with selected chromosomes
 		for (auto it_chr : *(sh_p->GetChromosomes())) {
 			p_rand = rand() % 100 + 1;							// Range [1,100]
 			if (p_rand < CalcPercent(it_chr->ObjectiveFunc()))
-				s_matingPool->InitBySelect(it_chr);
-			if (s_matingPool->GetChromosomes()->size() == size)
+				ga_evo->GetMatingPool()->InitBySelect(it_chr);
+			if (ga_evo->GetMatingPool()->GetChromosomes()->size() == size)
 				break;
 		}
 	}

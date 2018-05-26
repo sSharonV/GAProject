@@ -9,11 +9,34 @@ using namespace std;
 
 class Ded_Block;
 
+/*
+	Files is a touple of sn, id, dir_sn and a record of the blocks which are associated with it.
+	-	The map of the blocks consists of weak_ptr, because the original reference isn't stored in File instance
+*/
 class Ded_File {
+	/*	
+		Sn of files
+	*/
 	unsigned int f_sn;
+
+	/*
+		ID of files
+	*/
 	string f_id;
+
+	/*
+		dir_sn of files
+	*/
 	unsigned int f_dir_sn;
+
+	/*
+		Number of shared blocks
+	*/
 	unsigned long f_num_blocks;
+
+	/*
+		Smart pointer to map of assocated blocks
+	*/
 	shared_ptr<map<string, weak_ptr<Ded_Block>>> f_blocks;
 	
 public:

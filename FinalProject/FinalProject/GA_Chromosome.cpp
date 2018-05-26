@@ -60,7 +60,7 @@ void GA_Chromosome::InitSolution()
 	map<string, unsigned long> t_sns = evo_ptr->GetKeToIn();
 
 	chrono::duration<double> elapsed;
-	const int interval = 5;
+	const int interval = mig_ptr->GetProperties()->g_timeOut;
 	long double curr_size = 0;
 	bool stop_attach = false;
 
@@ -69,10 +69,6 @@ void GA_Chromosome::InitSolution()
 	srand(time(NULL));
 
 	auto start = chrono::high_resolution_clock::now();
-
-	/*	Testing specific blocks...
-	bool test = true;
-	*/
 
 	//	Stage 1 - Start attaching blocks up to the size of the limit
 	do {
@@ -97,7 +93,7 @@ void GA_Chromosome::InitSolution()
 		if (curr_size == g_solSize) {					// For some reason the solution wasn't updated yet...
 			auto curr = chrono::high_resolution_clock::now();
 			elapsed = curr - start;
-			// Check if after 60 seconds there's reason to terminate
+			// Check if after 'interval' seconds there's reason to terminate
 			if (elapsed.count() > interval) {
 				stop_attach = true;
 			}
@@ -109,15 +105,25 @@ void GA_Chromosome::InitSolution()
 	} while (g_solSize < g_solLimit && !stop_attach);
 
 	// Stage 2 - Add neighboors of the initial blocks
+	FixToFeasibleSol();
+}
+
+shared_ptr<map<unsigned long, weak_ptr<Ded_Block>>> GA_Chromosome::GetMyBlocks()
+{
+	return g_blocks;
+}
+
+void GA_Chromosome::FixToFeasibleSol() {
+	shared_ptr<GA_Evolution> evo_ptr(GA_Evolution::GetCurInstance());
+	map<string, unsigned long> t_sns = evo_ptr->GetKeToIn();
 	for (auto it_blocks : *g_blocks) {											// For each initial block
 		unsigned long i;
-		if(auto sh_b = it_blocks.second.lock()){
+		if (auto sh_b = it_blocks.second.lock()) {
 			shared_ptr<map<string, weak_ptr<Ded_Block>>> t_blocks = sh_b->GetMyNeighboors();					// Retrive it's neighboors
 			for (auto it_n_neigh : *t_blocks) {										// For each neighboor...
-				if(auto sh_n = it_n_neigh.second.lock()){
+				if (auto sh_n = it_n_neigh.second.lock()) {
 					i = t_sns[sh_n->GetSN()];			// Retrieve index of the sn (neighboor)
-
-					//	for blocks that are not already included in the solution
+														//	for blocks that are not already included in the solution
 					if (g_blocks->find(i) == g_blocks->end()) {
 						g_solution->at(i) = true;			//	Mark the block as migrating
 						(*g_blocks)[i] = it_n_neigh.second;	// Update chromosome's map to include this neighboor
@@ -129,10 +135,6 @@ void GA_Chromosome::InitSolution()
 	}
 }
 
-/*
-	Takes care of updating g_blocks for an modified chromosome
-	-	Being used by GA_Crossover, after generating new offspring
-*/
 void GA_Chromosome::AttachMyBlocks()
 {
 	// pointer to GA_Migration/GA_Evolution - for pulling information
@@ -148,12 +150,13 @@ void GA_Chromosome::AttachMyBlocks()
 	map<string, unsigned long> t_sns = evo_ptr->GetKeToIn();
 
 	// Iterate the boolean vector for migrating blocks
-	for (auto it_bool : *g_solution) {
-		if (it_bool) {	// block we need to assign to the chromosome's vector
-			unsigned long it_index = it_bool - *g_solution->begin();		//	Calculates index
-			string it_key = t_indexes[it_index];							//	Retrieve key of the current index
-			(*g_blocks)[it_index] = (t_blocks->find(it_key))->second;		//	Retrieve the reference of a block
-			g_solSize += (t_blocks->find(it_key))->second->GetSize();		//	Updating the size of this solution
+	for (unsigned long i = 0; i < g_solution->size(); i++){
+		if (g_solution->at(i)) {	// block we need to assign to the chromosome's vector
+			string it_key = t_indexes[i];							//	Retrieve key of the current index
+			if (g_blocks->find(i) == g_blocks->end()) {				// If the block isn't included
+				(*g_blocks)[i] = (t_blocks->find(it_key))->second;		//	Retrieve the reference of a block
+				g_solSize += (t_blocks->find(it_key))->second->GetSize();		//	Updating the size of this solution
+			}
 		}
 	}
 }
@@ -166,4 +169,9 @@ bool GA_Chromosome::CheckIndex(unsigned long index)
 void GA_Chromosome::SetIndex(unsigned long index, bool val)
 {
 	g_solution->at(index) = val;
+}
+
+long double GA_Chromosome::GetSolSize()
+{
+	return g_solSize;
 }

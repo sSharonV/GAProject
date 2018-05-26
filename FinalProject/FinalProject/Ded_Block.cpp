@@ -52,19 +52,13 @@ unsigned long Ded_Block::GetSize()
 	return size;
 }
 
-/*
-	Returns vector of pointers to the original blocks whom connected to this block
-*/
-
 shared_ptr<map<string, weak_ptr<Ded_Block>>> Ded_Block::GetMyNeighboors()
 {
-	//map<string, weak_ptr<Ded_File>>::iterator it_file;
-	
 	for (auto it_file : *b_files) 							// For each file
 		if (auto sh_file = it_file.second.lock()) {			// Retrive strong reference
 			if (sh_file->GetNumBlocks() > 1) {
 				for (auto it_block : *(sh_file->GetMyBlocks())) 	// for each associated block
-					if (auto sh_block = it_block.second.lock()) {
+					if (auto sh_block = it_block.second.lock()) {	// Retrive strong reference
 						string sn = sh_block->GetSN();
 						if (neighboors->find(sn) == neighboors->end()
 							&& (sn.compare(this->GetSN()) != 0)) // the block isn't recognized as neightboor yet

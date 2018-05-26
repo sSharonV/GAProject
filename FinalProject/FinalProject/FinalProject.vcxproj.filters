@@ -87,6 +87,9 @@
     <ClInclude Include="GA_Mutation.h">
       <Filter>Header Files\Evolution_Operations</Filter>
     </ClInclude>
+    <ClInclude Include="CResultDlg.h">
+      <Filter>Header Files\Migration</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Ded_Block.cpp">
@@ -142,6 +145,9 @@
     </ClCompile>
     <ClCompile Include="GA_Mutation.cpp">
       <Filter>Source Files\Mutation</Filter>
+    </ClCompile>
+    <ClCompile Include="CResultDlg.cpp">
+      <Filter>Source Files\Migration</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

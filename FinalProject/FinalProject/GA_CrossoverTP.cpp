@@ -1,14 +1,16 @@
 #include "GA_Crossover.h"
 
-GA_CrossoverTP::GA_CrossoverTP(shared_ptr<GA_Population> cur_pool, Crossover cros) : GA_Crossover(cur_pool, cros)
+GA_CrossoverTP::GA_CrossoverTP(Crossover cros) : GA_Crossover(cros)
 {
 
 }
 
 void GA_CrossoverTP::CrossImplement(shared_ptr<GA_Population> sh_pop, unsigned long num_blocks, long double limit)
 {
-	unsigned long i = 0;
+	unsigned long i;
 	unsigned long border1, border2;
+	shared_ptr<GA_Migration> mig_ptr(GA_Migration::GetCurInstance());
+	i = mig_ptr->GetProperties()->g_elit_best;
 	do {
 		chromo_1 = sh_pop->GetChromosomes()->at(i);
 		chromo_2 = sh_pop->GetChromosomes()->at(i + 1);
@@ -49,8 +51,6 @@ void GA_CrossoverTP::CrossImplement(shared_ptr<GA_Population> sh_pop, unsigned l
 				offspring_2->SetIndex(j, chromo_2->CheckIndex(j));
 			}
 		}
-		//offspring_1->AttachMyBlocks();
-		//offspring_2->AttachMyBlocks();
 		//	Adds the new children to the result population
 		s_newGeneration->push_back(offspring_1);
 		s_newGeneration->push_back(offspring_2);

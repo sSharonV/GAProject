@@ -1,32 +1,34 @@
 #include "GA_Mutation.h"
 
-GA_Mutation::GA_Mutation(Mutation mut, shared_ptr<vector<shared_ptr<GA_Chromosome>>> curr_pop, int chance) : s_mut_mode(mut), s_newGen(curr_pop), s_mut_chance(chance)
+GA_Mutation::GA_Mutation(Mutation mut, int chance) : s_mut_mode(mut), s_mut_chance(chance)
 {
 	
 }
 
 GA_Mutation::~GA_Mutation()
 {
-	if (s_newGen.expired())
-		s_newGen.reset();
+	/*if (s_newGen.expired())
+		s_newGen.reset();*/
 }
 
-void GA_Mutation::PerformMutation()
+void GA_Mutation::PerformMutation(shared_ptr<vector<shared_ptr<GA_Chromosome>>> newGen)
 {
 	unsigned long num_blocks;
 	shared_ptr<GA_Migration> mig_ptr(GA_Migration::GetCurInstance());
 	num_blocks = mig_ptr->GetBlocks()->size();
-	if(auto sh_p = s_newGen.lock()){
-		for(auto it : *sh_p){
-			switch (s_mut_mode) {
-				case Mutation::sin_point_mut: {
-					PerformSingle(it);
-					break;
-				}
-				case Mutation::uni_point_mut: {
-					PerformUniform(it);
-					break;
-				}
+	auto it = newGen->begin();
+	for (int i = 0; i < mig_ptr->GetProperties()->g_elit_best; i++)
+		it++;
+
+	for (it; it != newGen->end(); it++) {
+		switch (s_mut_mode) {
+			case Mutation::sin_point_mut: {
+				PerformSingle(*it);
+				break;
+			}
+			case Mutation::uni_point_mut: {
+				PerformUniform(*it);
+				break;
 			}
 		}
 	}

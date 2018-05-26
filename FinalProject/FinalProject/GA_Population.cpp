@@ -4,6 +4,12 @@ GA_Population::GA_Population(int size) : p_size(size) {
 	p_chromosomes = make_shared<vector<shared_ptr<GA_Chromosome>>>(vector<shared_ptr<GA_Chromosome>>(0));
 }
 
+GA_Population::GA_Population(vector<shared_ptr<GA_Chromosome>> chromosomes)
+{
+	p_size = chromosomes.size();
+	p_chromosomes = make_shared<vector<shared_ptr<GA_Chromosome>>>(vector<shared_ptr<GA_Chromosome>>(chromosomes));
+}
+
 GA_Population::GA_Population()
 {
 	p_chromosomes = make_shared<vector<shared_ptr<GA_Chromosome>>>(vector<shared_ptr<GA_Chromosome>>(0));
