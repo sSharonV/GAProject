@@ -257,6 +257,7 @@ void GA_Migration::InitKBForMig()
 		mig_props->g_KB_minimal *= ((100 - mig_props->g_over_percent) / 100);
 	}
 	else {
+		//mig_props->g_KB_minimal = mig_props->g_KBforMig;
 		mig_props->g_KBforMig = (long double)mig_props->g_totalKB * ((mig_props->g_percent) / 100.0);
 		mig_props->g_KBforMig *= ((100 + mig_props->g_over_percent) / 100.0);
 		mig_props->g_KB_minimal = mig_props->g_KBforMig;
@@ -365,7 +366,7 @@ void GA_Migration::ConnectBlockAndFiles(shared_ptr<map<string, string>> block_si
 		(*m_blocks)[it.first]->setBlockSize(stoi(it.second));
 		(mig_props)->g_totalKB += stoi(it.second);		// Sum the size (in bytes) of all blocks
 	}
-	(mig_props)->g_totalKB /= (10 ^ 3);				// In KB
+	//(mig_props)->g_totalKB /= (10 ^ 3);				// In KB
 	for (auto it : *f_b) {					// for every file
 		for (auto sub_it : it.second) {		// check associated blocks to it
 													//	Update pointer to the reference of the associated blocks
