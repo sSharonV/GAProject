@@ -24,10 +24,15 @@ class GA_Chromosome {
 	shared_ptr<map<unsigned long, weak_ptr<Ded_Block>>> g_blocks;
 
 	/*
-		Solution size in bytes
+		Total Solution size in bytes
 	*/
 	long double g_solSize;
 
+	/*
+		Size which found for migration - without considering the size of neighboors
+	*/
+
+	long double g_migratedSize;
 	/*
 		Size for solution in bytes
 	*/
@@ -42,6 +47,7 @@ public:
 	bool CheckIndex(unsigned long index);
 	void SetIndex(unsigned long index, bool val);
 	long double GetSolSize();
+	long double GetMigSize();
 	void setSizeInBytes(long double s);
 
 	/*

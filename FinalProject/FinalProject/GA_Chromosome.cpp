@@ -104,6 +104,8 @@ void GA_Chromosome::InitSolution()
 		}
 	} while ((g_solSize < g_solLimit || g_solSize < mig_ptr->GetProperties()->g_KB_minimal) && !stop_attach);
 
+	g_migratedSize = g_solSize;
+
 	// Stage 2 - Add neighboors of the initial blocks
 	FixToFeasibleSol();
 }
@@ -174,4 +176,9 @@ void GA_Chromosome::SetIndex(unsigned long index, bool val)
 long double GA_Chromosome::GetSolSize()
 {
 	return g_solSize;
+}
+
+long double GA_Chromosome::GetMigSize()
+{
+	return g_migratedSize;
 }
