@@ -70,7 +70,7 @@ void GA_Chromosome::InitSolution()
 
 	auto start = chrono::high_resolution_clock::now();
 
-	//	Stage 1 - Start attaching blocks up to the size of the limit
+	//	Stage 1 - Start attaching blocks up to the size of the limit (with minimal size which was calculated..)
 	do {
 		// Get random block
 		i_rand = rand() % t_blocks->size();
@@ -102,7 +102,7 @@ void GA_Chromosome::InitSolution()
 			start = chrono::high_resolution_clock::now();
 			curr_size = g_solSize;
 		}
-	} while (g_solSize < g_solLimit && !stop_attach);
+	} while ((g_solSize < g_solLimit || g_solSize < mig_ptr->GetProperties()->g_KB_minimal) && !stop_attach);
 
 	// Stage 2 - Add neighboors of the initial blocks
 	FixToFeasibleSol();
