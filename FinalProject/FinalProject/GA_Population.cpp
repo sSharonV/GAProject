@@ -8,6 +8,7 @@ GA_Population::GA_Population(vector<shared_ptr<GA_Chromosome>> chromosomes)
 {
 	p_size = chromosomes.size();
 	p_chromosomes = make_shared<vector<shared_ptr<GA_Chromosome>>>(vector<shared_ptr<GA_Chromosome>>(chromosomes));
+
 }
 
 GA_Population::GA_Population()
@@ -40,7 +41,7 @@ void GA_Population::Initialize()
 
 void GA_Population::InitBySelect(shared_ptr<GA_Chromosome> push_chr)
 {
-	p_chromosomes->push_back(push_chr);
+	p_chromosomes->push_back(make_shared<GA_Chromosome>(*push_chr));
 }
 
 int GA_Population::GetPopSize()

@@ -107,7 +107,7 @@ void GA_Evolution::StartEvolution()
 	mutation = make_shared<GA_Mutation>(GA_Mutation(mig_ptr->GetProperties()->g_mut_mode, mig_ptr->GetProperties()->g_mut_rate));
 
 	m_popu->Initialize();
-	m_Initialpopu = make_shared<GA_Population>(GA_Population(*m_popu));
+	m_Initialpopu = make_shared<GA_Population>(GA_Population(*m_popu->GetChromosomes()));
 
 	while(curr_gen != mig_ptr->GetProperties()->g_generations){
 		

@@ -8,26 +8,24 @@ GA_Chromosome::GA_Chromosome(unsigned long num_blocks, long double limit, int id
 	g_blocks = make_shared<t_blocks>(il_blocks{});
 	g_solution = make_shared<vector<bool>>(vector<bool>(num_blocks));
 	g_solSize = 0;
+	g_timedOut = false;
+	g_migratedSize = 0;
 }
 
 GA_Chromosome::GA_Chromosome(const GA_Chromosome & other)
 {
 	this->g_solSize = other.g_solSize;
+	this->g_migratedSize = other.g_migratedSize;
 	this->g_solLimit = other.g_solLimit;
 	this->g_blocks = other.g_blocks;
 	this->g_solution = other.g_solution;
 	this->g_id = other.g_id;
+	this->g_timedOut = other.g_timedOut;
 }
 
 GA_Chromosome::~GA_Chromosome()
 {
 }
-
-/*
-bool GA_Chromosome::operator<(GA_Chromosome& const other) const
-{
-	return (ObjectiveFunc() < other.ObjectiveFunc()) ? true : false ;
-}*/
 
 long double GA_Chromosome::ObjectiveFunc() const
 {
@@ -96,6 +94,12 @@ void GA_Chromosome::InitSolution()
 			// Check if after 'interval' seconds there's reason to terminate
 			if (elapsed.count() > interval) {
 				stop_attach = true;
+				if (g_solSize < (long double)mig_ptr->GetProperties()->g_KB_minimal){
+					g_timedOut = true;
+					g_solSize = 0;
+					g_blocks->clear();
+					fill(g_solution->begin(), g_solution->end(), false);
+				}
 			}
 		}
 		else {											// If g_solSize was updated - update start time for interval check....
@@ -161,6 +165,7 @@ void GA_Chromosome::AttachMyBlocks()
 			}
 		}
 	}
+	g_migratedSize = g_solSize;
 }
 
 bool GA_Chromosome::CheckIndex(unsigned long index)
@@ -181,4 +186,9 @@ long double GA_Chromosome::GetSolSize()
 long double GA_Chromosome::GetMigSize()
 {
 	return g_migratedSize;
+}
+
+bool GA_Chromosome::GetTimedOut()
+{
+	return g_timedOut;
 }

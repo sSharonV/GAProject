@@ -31,12 +31,17 @@ class GA_Chromosome {
 	/*
 		Size which found for migration - without considering the size of neighboors
 	*/
-
 	long double g_migratedSize;
+
 	/*
 		Size for solution in bytes
 	*/
 	long double g_solLimit;
+
+	/*
+		Boolean sign for chromosome timeouted during its initialization because it couldn't satisfy the minimal size condition
+	*/
+	bool g_timedOut;
 	
 public:
 	int g_id;
@@ -48,6 +53,7 @@ public:
 	void SetIndex(unsigned long index, bool val);
 	long double GetSolSize();
 	long double GetMigSize();
+	bool GetTimedOut();
 	void setSizeInBytes(long double s);
 
 	/*
