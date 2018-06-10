@@ -25,12 +25,12 @@ void GA_CrossoverU::CrossImplement(shared_ptr<GA_Population> sh_pop, unsigned lo
 			//	Generate boolean values for some random mask
 			i_rand = rand() % 2;
 			if (i_rand) {	// Swap data
-				offspring_1->SetIndex(i, chromo_2->CheckIndex(i));
-				offspring_2->SetIndex(i, chromo_1->CheckIndex(i));
+				offspring_1->SetIndex(i, chromo_2->CheckIndex(i), chromo_2->IndexStatus(i));
+				offspring_2->SetIndex(i, chromo_1->CheckIndex(i), chromo_1->IndexStatus(i));
 			}
 			else {
-				offspring_1->SetIndex(i, chromo_1->CheckIndex(i));
-				offspring_2->SetIndex(i, chromo_2->CheckIndex(i));
+				offspring_1->SetIndex(i, chromo_1->CheckIndex(i), chromo_1->IndexStatus(i));
+				offspring_2->SetIndex(i, chromo_2->CheckIndex(i), chromo_2->IndexStatus(i));
 			}
 			i++;
 		}

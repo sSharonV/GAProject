@@ -29,11 +29,13 @@ void GA_SelectionRW::SelectImplement(shared_ptr<GA_Population> sh_p)
 	// Start attaching chromosomes to the mating pool
 	while (ga_evo->GetMatingPool()->GetChromosomes()->size() != size) {	// Untill the mating pool is full with selected chromosomes
 		for (auto it_chr : *(sh_p->GetChromosomes())) {
-			p_rand = rand() % 100 + 1;							// Range [1,100]
-			if (p_rand < CalcPercent(it_chr->ObjectiveFunc()))
-				ga_evo->GetMatingPool()->InitBySelect(it_chr);
-			if (ga_evo->GetMatingPool()->GetChromosomes()->size() == size)
-				break;
+			if (!(it_chr)->GetTimedOut()) {
+				p_rand = rand() % 100 + 1;							// Range [1,100]
+				if (p_rand < CalcPercent(it_chr->ObjectiveFunc()))
+					ga_evo->GetMatingPool()->InitBySelect(it_chr);
+				if (ga_evo->GetMatingPool()->GetChromosomes()->size() == size)
+					break;
+			}
 		}
 	}
 }

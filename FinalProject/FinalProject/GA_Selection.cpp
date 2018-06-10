@@ -24,6 +24,8 @@ void GA_Selection::InitElitism()
 {
 	vector<shared_ptr<GA_Chromosome>> t_chrom;
 	shared_ptr<GA_Evolution> ga_evo(GA_Evolution::GetCurInstance());
+	shared_ptr<GA_Migration> ga_mig(GA_Migration::GetCurInstance());
+	int i;
 	
 	t_chrom = *ga_evo->GetCurPopulation()->GetChromosomes();
 
@@ -35,8 +37,16 @@ void GA_Selection::InitElitism()
 			});
 			
 	// Take 's_elit' chromosomes from the ordered vector
-	for (int cnt = 0; cnt < s_elit; cnt++)
-		ga_evo->GetMatingPool()->InitBySelect(t_chrom.at(cnt));
+
+	for (int cnt = 0, i = 0; cnt < s_elit; cnt++, i++) {
+		if ((t_chrom.at(i)->GetMigSize() >= ga_mig->GetProperties()->g_KB_minimal)
+			&& (t_chrom.at(i)->GetMigSize() <= ga_mig->GetProperties()->g_KBforMig))
+		{
+			ga_evo->GetMatingPool()->InitBySelect(t_chrom.at(i));
+		}
+		else cnt--;
+		
+	}
 }
 
 

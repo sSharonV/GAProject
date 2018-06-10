@@ -20,14 +20,14 @@ void GA_CrossoverTP::CrossImplement(shared_ptr<GA_Population> sh_pop, unsigned l
 
 		if (num_blocks < 3) {	//	Special cases to handle...
 			if (num_blocks == 2) {
-				offspring_1->SetIndex(0, chromo_2->CheckIndex(0));
-				offspring_2->SetIndex(0, chromo_1->CheckIndex(0));
-				offspring_1->SetIndex(1, chromo_2->CheckIndex(1));
-				offspring_2->SetIndex(1, chromo_1->CheckIndex(1));
+				offspring_1->SetIndex(0, chromo_2->CheckIndex(0), chromo_2->IndexStatus(0));
+				offspring_2->SetIndex(0, chromo_1->CheckIndex(0), chromo_1->IndexStatus(0));
+				offspring_1->SetIndex(1, chromo_2->CheckIndex(1), chromo_2->IndexStatus(1));
+				offspring_2->SetIndex(1, chromo_1->CheckIndex(1), chromo_1->IndexStatus(1));
 			}
 			if (num_blocks == 1) {
-				offspring_1->SetIndex(0, chromo_2->CheckIndex(0));
-				offspring_2->SetIndex(0, chromo_1->CheckIndex(0));
+				offspring_1->SetIndex(0, chromo_2->CheckIndex(0), chromo_2->IndexStatus(0));
+				offspring_2->SetIndex(0, chromo_1->CheckIndex(0), chromo_1->IndexStatus(0));
 			}
 		}
 		else {
@@ -37,18 +37,18 @@ void GA_CrossoverTP::CrossImplement(shared_ptr<GA_Population> sh_pop, unsigned l
 
 			//	Start with copying the original information from the attached parent - up to the border1
 			for (unsigned long j = 0; j < border1; j++) {
-				offspring_1->SetIndex(j, chromo_1->CheckIndex(j));
-				offspring_2->SetIndex(j, chromo_2->CheckIndex(j));
+				offspring_1->SetIndex(j, chromo_1->CheckIndex(j), chromo_1->IndexStatus(j));
+				offspring_2->SetIndex(j, chromo_2->CheckIndex(j), chromo_2->IndexStatus(j));
 			}
 			//	Swap the information of the parents between the children - from the border1 
 			for (unsigned long j = border1; j < border2; j++) {
-				offspring_1->SetIndex(j, chromo_2->CheckIndex(j));
-				offspring_2->SetIndex(j, chromo_1->CheckIndex(j));
+				offspring_1->SetIndex(j, chromo_2->CheckIndex(j), chromo_2->IndexStatus(j));
+				offspring_2->SetIndex(j, chromo_1->CheckIndex(j), chromo_1->IndexStatus(j));
 			}
 			//	Keep copying the original information from the attached parent
 			for (unsigned long j = border2; j < num_blocks; j++) {
-				offspring_1->SetIndex(j, chromo_1->CheckIndex(j));
-				offspring_2->SetIndex(j, chromo_2->CheckIndex(j));
+				offspring_1->SetIndex(j, chromo_1->CheckIndex(j), chromo_1->IndexStatus(j));
+				offspring_2->SetIndex(j, chromo_2->CheckIndex(j), chromo_2->IndexStatus(j));
 			}
 		}
 		//	Adds the new children to the result population

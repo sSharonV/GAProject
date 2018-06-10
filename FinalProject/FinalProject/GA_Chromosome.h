@@ -16,10 +16,10 @@ class GA_Chromosome {
 	/*
 		Boolean vector for storing the descisions for migrating blocks
 	*/
-	shared_ptr<vector<bool>> g_solution;
+	shared_ptr<vector<pair<bool,string>>> g_solution;
 
 	/*
-		Map of the associated blocks of this solution
+		Map of the mig blocks of this solution
 	*/
 	shared_ptr<map<unsigned long, weak_ptr<Ded_Block>>> g_blocks;
 
@@ -50,11 +50,14 @@ public:
 	~GA_Chromosome();
 	shared_ptr<map<unsigned long, weak_ptr<Ded_Block>>> GetMyBlocks();
 	bool CheckIndex(unsigned long index);
-	void SetIndex(unsigned long index, bool val);
+	string IndexStatus(unsigned long index);
+	void SetIndex(unsigned long index, bool val, string stat);
 	long double GetSolSize();
 	long double GetMigSize();
 	bool GetTimedOut();
 	void setSizeInBytes(long double s);
+
+	vector<unsigned long> GetMigratedIndexes();
 
 	/*
 		Objective function is the additional size between the requeseted size (by the user) compared to physical size of the current solution

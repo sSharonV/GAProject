@@ -28,7 +28,8 @@ void GA_SelectionTS::SelectImplement(shared_ptr<GA_Population> sh_p)
 		//	Generate 'm_k_competitors' competitors 
 		while (t_chrom_tour.size() != m_k_competitors) {
 			p_rand = rand() % sh_p->GetPopSize();
-			t_chrom_tour.push_back(t_chrom.at(p_rand));
+			if(!t_chrom.at(p_rand)->GetTimedOut())
+				t_chrom_tour.push_back(t_chrom.at(p_rand));
 		}
 		PerformTournament(t_chrom_tour);
 	}

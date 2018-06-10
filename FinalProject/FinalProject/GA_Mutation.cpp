@@ -47,7 +47,7 @@ void GA_Mutation::PerformSingle(shared_ptr<GA_Chromosome> toMut)
 	i_rand = rand() % (mig_ptr->GetBlocks()->size());
 
 	if(rand_chance <= s_mut_chance)
-		toMut->SetIndex(i_rand, !(toMut->CheckIndex(i_rand)));
+		toMut->SetIndex(i_rand, !(toMut->CheckIndex(i_rand)), toMut->IndexStatus(i_rand));
 }
 
 void GA_Mutation::PerformUniform(shared_ptr<GA_Chromosome> toMut)
@@ -67,6 +67,6 @@ void GA_Mutation::PerformUniform(shared_ptr<GA_Chromosome> toMut)
 	for (unsigned long j = distance; j < distance + relative; j++) {
 		rand_chance = rand() % 100 + 1;
 		if(rand_chance <= s_mut_chance)
-			toMut->SetIndex(j, !(toMut->CheckIndex(j)));
+			toMut->SetIndex(j, !(toMut->CheckIndex(j)), toMut->IndexStatus(j));
 	}
 }

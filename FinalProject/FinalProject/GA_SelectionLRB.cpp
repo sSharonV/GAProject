@@ -39,13 +39,15 @@ void GA_SelectionLRB::SelectImplement(shared_ptr<GA_Population> sh_p)
 	while (ga_evo->GetMatingPool()->GetChromosomes()->size() != m_N) {	// Untill the mating pool is full with selected chromosomes
 		int i = m_N;
 		for (auto it_chr = t_chrom.begin(); it_chr != t_chrom.end(); it_chr++) {
-			p_rand = rand() % sum_rank + 1;						// Range [1,sum_rank]
-			ch_percent = (long double)((CalcExpVal(i) / m_N) * (100.0));
-			i--;
-			if (p_rand < ch_percent)
-				ga_evo->GetMatingPool()->InitBySelect(*it_chr);
-			if (ga_evo->GetMatingPool()->GetChromosomes()->size() == m_N)
-				break;
+			if(!(*it_chr)->GetTimedOut()){
+				p_rand = rand() % sum_rank + 1;						// Range [1,sum_rank]
+				ch_percent = (long double)((CalcExpVal(i) / m_N) * (100.0));
+				i--;
+				if (p_rand < ch_percent)
+					ga_evo->GetMatingPool()->InitBySelect(*it_chr);
+				if (ga_evo->GetMatingPool()->GetChromosomes()->size() == m_N)
+					break;
+			}
 		}
 	}
 }

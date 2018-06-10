@@ -70,6 +70,8 @@ void GA_Evolution::StartEvolution()
 	shared_ptr<GA_Selection> selection;
 	shared_ptr<GA_Crossover> crossover;
 	shared_ptr<GA_Mutation> mutation;
+	bool allTimedOut = true, make_feasible = true;
+	int i = 0;
 	int curr_gen = 0;
 
 	switch (mig_ptr->GetProperties()->g_sel_mode) {
@@ -107,39 +109,111 @@ void GA_Evolution::StartEvolution()
 	mutation = make_shared<GA_Mutation>(GA_Mutation(mig_ptr->GetProperties()->g_mut_mode, mig_ptr->GetProperties()->g_mut_rate));
 
 	m_popu->Initialize();
-	m_Initialpopu = make_shared<GA_Population>(GA_Population(*m_popu->GetChromosomes()));
-
-	while(curr_gen != mig_ptr->GetProperties()->g_generations){
-		
-		selection->InitMatingPool(m_popu);
-
-		crossover->GenerateOffprings(m_matingPool);
-	
-		mutation->PerformMutation(crossover->GetNewGeneration());
-
-		for (auto it_chr : *(crossover->GetNewGeneration())) {
-			it_chr->AttachMyBlocks();
-			if (curr_gen + 1 == mig_ptr->GetProperties()->g_start_fix) {
-				it_chr->FixToFeasibleSol();
-			}
-		}
-
-		m_popu = make_shared<GA_Population>(GA_Population(*crossover->GetNewGeneration()));
-		curr_gen++;
+	for (auto it_chr : *m_popu->GetChromosomes()) {
+		if (!it_chr->GetTimedOut()) allTimedOut = false;
 	}
 	
-	sort(m_popu->GetChromosomes()->begin(), m_popu->GetChromosomes()->end(),
-		//	- Sort being processed with the objective function value of the chromosomes
-		[](const shared_ptr<GA_Chromosome> o1, const shared_ptr<GA_Chromosome> o2) {
-		return o1->ObjectiveFunc() < o2->ObjectiveFunc();
-	});
+	if(!allTimedOut){	// If there at least one feasible solution from the Initial Population
+		m_Initialpopu = make_shared<GA_Population>(GA_Population(*m_popu->GetChromosomes()));
 
-	sort(m_Initialpopu->GetChromosomes()->begin(), m_Initialpopu->GetChromosomes()->end(),
-		//	- Sort being processed with the objective function value of the chromosomes
-		[](const shared_ptr<GA_Chromosome> o1, const shared_ptr<GA_Chromosome> o2) {
-		return o1->ObjectiveFunc() < o2->ObjectiveFunc();
-	});
+		while(curr_gen != mig_ptr->GetProperties()->g_generations){
+		
+			selection->InitMatingPool(m_popu);
+
+			crossover->GenerateOffprings(m_matingPool);
 	
-	printf("Hey");
+			mutation->PerformMutation(crossover->GetNewGeneration());
+
+			for (auto it_chr = crossover->GetNewGeneration()->begin() + mig_ptr->GetProperties()->g_elit_best;
+					it_chr != crossover->GetNewGeneration()->end(); it_chr++) 
+			{
+				(*it_chr)->AttachMyBlocks();
+				(*it_chr)->FixToFeasibleSol();
+				if (curr_gen + 1 == mig_ptr->GetProperties()->g_start_fix) {
+					while (make_feasible) {
+						i = 0;
+						for (i; i < m_popu->GetChromosomes()->size(); i++) {
+							if ((m_popu->GetChromosomes()->at(i)->GetMigSize() < mig_ptr->GetProperties()->g_KB_minimal)
+								|| (m_popu->GetChromosomes()->at(i)->GetMigSize() > mig_ptr->GetProperties()->g_KBforMig))
+							{
+								m_popu->GetChromosomes()->erase(remove(m_popu->GetChromosomes()->begin(),
+									m_popu->GetChromosomes()->end(),
+									m_popu->GetChromosomes()->at(i)),
+									m_popu->GetChromosomes()->end());
+								break;
+
+							}
+							if (i == m_popu->GetChromosomes()->size() - 1) make_feasible = false;
+						}
+					}
+					if (m_popu->GetChromosomes()->empty()) {
+						m_popu = m_Initialpopu;
+					}
+					else {
+						// if we need to full the population with the max size
+						if (m_popu->GetChromosomes()->size() != m_Initialpopu->GetChromosomes()->size()) {
+							sort(m_popu->GetChromosomes()->begin(), m_popu->GetChromosomes()->end(),
+								//	- Sort being processed with the objective function value of the chromosomes
+								[](const shared_ptr<GA_Chromosome> o1, const shared_ptr<GA_Chromosome> o2) {
+								return o1->ObjectiveFunc() < o2->ObjectiveFunc();
+							});
+							while (m_popu->GetChromosomes()->size() != m_Initialpopu->GetChromosomes()->size())
+								m_popu->InitBySelect(m_popu->GetChromosomes()->at(0));
+						}
+					}
+				}
+			}
+
+			m_popu = make_shared<GA_Population>(GA_Population(*crossover->GetNewGeneration()));
+			curr_gen++;
+		}
+	
+		sort(m_popu->GetChromosomes()->begin(), m_popu->GetChromosomes()->end(),
+			//	- Sort being processed with the objective function value of the chromosomes
+			[](const shared_ptr<GA_Chromosome> o1, const shared_ptr<GA_Chromosome> o2) {
+			return o1->ObjectiveFunc() < o2->ObjectiveFunc();
+		});
+
+		sort(m_Initialpopu->GetChromosomes()->begin(), m_Initialpopu->GetChromosomes()->end(),
+			//	- Sort being processed with the objective function value of the chromosomes
+			[](const shared_ptr<GA_Chromosome> o1, const shared_ptr<GA_Chromosome> o2) {
+			return o1->ObjectiveFunc() < o2->ObjectiveFunc();
+		});
+
+		while(make_feasible){
+			i = 0;
+			for (i; i < m_popu->GetChromosomes()->size(); i++) {
+				if ((m_popu->GetChromosomes()->at(i)->GetMigSize() < mig_ptr->GetProperties()->g_KB_minimal)
+					|| (m_popu->GetChromosomes()->at(i)->GetMigSize() > mig_ptr->GetProperties()->g_KBforMig))
+				{
+					m_popu->GetChromosomes()->erase(remove(m_popu->GetChromosomes()->begin(), 
+														   m_popu->GetChromosomes()->end(), 
+														   m_popu->GetChromosomes()->at(i)), 
+														   m_popu->GetChromosomes()->end());
+					break;
+					
+				}
+				if (i == m_popu->GetChromosomes()->size()-1) make_feasible = false;
+			}
+		}
+		if (m_popu->GetChromosomes()->empty()) {
+			m_popu = m_Initialpopu;
+		}
+		else{
+			// if we need to full the population with the max size
+			if (m_popu->GetChromosomes()->size() != m_Initialpopu->GetChromosomes()->size()){
+				sort(m_popu->GetChromosomes()->begin(), m_popu->GetChromosomes()->end(),
+					//	- Sort being processed with the objective function value of the chromosomes
+					[](const shared_ptr<GA_Chromosome> o1, const shared_ptr<GA_Chromosome> o2) {
+					return o1->ObjectiveFunc() < o2->ObjectiveFunc();
+				});
+				while (m_popu->GetChromosomes()->size() != m_Initialpopu->GetChromosomes()->size())
+					m_popu->InitBySelect(m_popu->GetChromosomes()->at(0));
+			}
+			
+
+		}
+
+	}
 }
 
