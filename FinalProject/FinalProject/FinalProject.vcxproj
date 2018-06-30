@@ -236,6 +236,13 @@
     <None Include="res\FinalProject.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="..\..\..\..\..\Desktop\BraudeLogo.PNG" />
+    <Image Include="res\bitmap1.bmp" />
+    <Image Include="res\bitmap2.bmp" />
+    <Image Include="res\bitmap3.bmp" />
+    <Image Include="res\BraudeLogo.bmp" />
+    <Image Include="res\BraudeLogo.PNG" />
+    <Image Include="res\Capture1.ico" />
     <Image Include="res\FinalProject.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
